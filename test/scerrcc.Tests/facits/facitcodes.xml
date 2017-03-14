@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE error-codes [
+
+  <!ELEMENT error-codes (facility+)>
+  <!ELEMENT facility    (code+)>
+  <!ELEMENT code        (message,remarks?)>
+  <!ELEMENT message     (#PCDATA)>
+  <!ELEMENT remarks     (#PCDATA|para)*>
+  <!ELEMENT para        (#PCDATA)>
+
+  <!-- facility's "hex" attrib is a 12-bit integer in hexadecimal notation. -->
+  <!ATTLIST facility   hex      CDATA                                 #REQUIRED>
+  <!-- 
+    facility's "name" attribute is only used internally. It will not 
+    appear in the generated code, but should be a valid identifier.
+    A good idea is to only use a-zA-Z.
+    -->
+  <!ATTLIST facility   name     ID                                    #REQUIRED>
+  <!-- 
+    code's "hex" attribute is a 15-bit integer in hexadecimal notation.
+    Or rather, actually it's 16 bits, but bit 16 is used to carry other 
+    information from the I/O controllers so it should never be set. 
+    -->
+  <!ATTLIST code       hex      CDATA                                 #REQUIRED>
+  <!-- 
+    code's "name" attribute is the identifier for the code, and will 
+    be used as a #define in the native h file, and as a const in the C#
+    generated.
+    -->
+  <!ATTLIST code       name     ID                                    #REQUIRED>
+  <!-- 
+    code's "severity" attribute; constitutes the four highest order bits:
+    Success       0x0
+    Informational 0x1
+    Warning       0x2
+    Error         0x3
+    -->
+  <!ATTLIST code       severity (Success|Informational|Warning|Error) #REQUIRED>
+
+]>
+<error-codes>
+  <!-- 
+  Header file containing all Starcounter error codes. Note that error code 0 is reserved 
+  for no error (the operation was successful). 
+  -->
+
+  <facility name="Unspecified" hex="0000">
+    <code hex="3E7" severity="Error" name="ScErrUnspecified">
+      <message>An unspecified error caused the operation to fail.</message>
+    </code>
+  </facility>
+
+  <!-- General error codes. -->
+  <facility name="General" hex="0001">
+    <code hex="0001" severity="Error" name="ScErrBadArguments">
+      <message>One or more arguments was invalid.</message>
+    </code>
+    <code hex="0012" severity="Error" name="ScErrUnresposiveThreadStall">
+      <message>
+        A cooperatively scheduled worker thread has been unresponsive for an unacceptably long
+        period of time.
+      </message>
+      <remarks>
+        <para>
+          A cooperatively scheduled worker thread is considered unresponsive when it hasn't yielded
+          for more then a minute but this error isn't generated unless the thread has been
+          unresponsive for a user configured period of time (2 minutes by default). If a thread is
+          detected to be unresponsive but not long enough for the error to be generated, a warning
+          is generated instead.
+        </para>
+        <para>
+          The error is likely caused by an infinite loop or a deadlock but could also be caused by
+          the thread doing something that doesn't give it the opportunity to yield for a very long
+          period of time (which also is a real problem since the stall timeout is configured in
+          minutes).
+        </para>
+      </remarks>
+    </code>
+  </facility>
+
+  <!--
+    Startup and shutdown error codes. Group contains codes for errors occuring during startup or shutdown.
+    Usually caused by a faulty installation or faulty configuration settings. 
+  -->
+  <facility name="StartupAndShutdown" hex="0002">
+    <code hex="0001" severity="Error" name="ScErrAppAlreadyStarted">
+      <message>A Starcounter process with the specified name is already started.</message>
+    </code>
+    <code hex="0002" severity="Error" name="ScErrBadBaseDirectoryConfig">
+      <message>Base directory (baseDirectory) missing from config or invalid.</message>
+      <remarks>
+        Applies if the specified directory doesn't exists or is invalid (for example if the
+        specified path indicates a file), or if a base directory isn't specified when one is
+        required.
+      </remarks>
+    </code>
+    <!--
+    <code hex="0006" severity="Error" name="ScErrBadServerBacklogConfig">
+      <message>The backlog configuration for the TCP/IP interface (serverBacklog) is invalid.</message>
+    </code>
+    <code hex="0007" severity="Error" name="ScErrBadServerEndpointConfig">
+      <message>The endpoint configuration for the TCP/IP interface (serverEndPoint) is invalid.</message>
+    </code>
+-->
+  </facility>
+</error-codes>

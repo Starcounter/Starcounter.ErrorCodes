@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Library containing errorcodes and utilities around it.</Description>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>netstandard1.6;net46</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <!-- Neccessary until we see a fix for: https://github.com/dotnet/roslyn/issues/16040 -->
+    <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\generated\errorcodes.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="System.Runtime" Version="4.3.0"/>
+    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
+  </ItemGroup>
+
+  
+</Project>
