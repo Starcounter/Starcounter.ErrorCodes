@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace scerrcc {
+namespace Starcounter.ErrorCodes.Generator {
     public sealed class ErrorFile {
         public readonly IList<ErrorCode> ErrorCodes;
 

@@ -5,7 +5,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace scerrcc {
+namespace Starcounter.ErrorCodes.Generator {
     public static class ErrorFileReader {
         private static readonly Regex MultipleWhitespace = new Regex(@"\s+");
 

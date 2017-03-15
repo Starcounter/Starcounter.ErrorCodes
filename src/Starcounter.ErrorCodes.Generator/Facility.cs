@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace scerrcc {
+namespace Starcounter.ErrorCodes.Generator {
     public sealed class Facility {
         internal Facility(string name, uint code) {
             if (code >> 12 != 0)

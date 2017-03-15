@@ -8,7 +8,7 @@ using System.Net;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace scerrcc {
+namespace Starcounter.ErrorCodes.Generator {
 class Program {
     private static readonly Regex MultipleWhitespace = new Regex(@"\s+");
 

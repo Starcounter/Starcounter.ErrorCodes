@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace scerrcc {
+namespace Starcounter.ErrorCodes.Generator {
     public sealed class ErrorCode {
         public Facility Facility { get; private set;}
         public string Name { get; private set; }

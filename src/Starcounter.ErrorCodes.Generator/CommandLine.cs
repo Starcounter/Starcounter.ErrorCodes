@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace scerrcc {
+namespace Starcounter.ErrorCodes.Generator {
     static class CommandLine {
         public static void ParseArgs(string[] args, 
                                      ref Stream instream,

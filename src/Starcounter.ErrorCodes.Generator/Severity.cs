@@ -1,4 +1,4 @@
-﻿namespace scerrcc {
+﻿namespace Starcounter.ErrorCodes.Generator {
     public enum Severity : uint {
         Success = 0x0,
         Informational = 0x1,
