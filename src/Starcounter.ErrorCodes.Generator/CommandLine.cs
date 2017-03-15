@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Starcounter.ErrorCodes.Generator {
     // TODO:
@@ -27,6 +29,9 @@ namespace Starcounter.ErrorCodes.Generator {
                         csFilePath = args[i+1];
                         i++;
                         break;
+                    case "-debug":
+                        WaitForDebugger();
+                        break;
                     default:
                         throw new ArgumentException("Unknown switch: " + args[i]);
                 }
@@ -39,6 +44,14 @@ namespace Starcounter.ErrorCodes.Generator {
             Console.Error.WriteLine("Where [options] are:");
             Console.Error.WriteLine("-v             Verbose mode");
             Console.Error.WriteLine("-cs [csfile]   Filepath for generated code c# code.");
+        }
+
+        private static void WaitForDebugger(){
+            Console.Write("Waiting for debugger");
+            while (!Debugger.IsAttached) {
+                Console.Write(".");
+                Thread.Sleep(200);
+            }
         }
     }
 }

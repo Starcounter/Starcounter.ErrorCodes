@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Diagnostics;
-using System.Threading;
 
 namespace Starcounter.ErrorCodes.Generator {
     class Program {
@@ -21,17 +20,8 @@ namespace Starcounter.ErrorCodes.Generator {
             }
         }
 
-        private static void WaitForDebugger(){
-            while (!Debugger.IsAttached) {
-                Console.Write(".");
-                Thread.Sleep(200);
-            }
-        }
-
         static void Main(string[] args) {
             try {
-                WaitForDebugger();
-
                 string srcFilePath = null;
                 string csFilePath = null;
 
