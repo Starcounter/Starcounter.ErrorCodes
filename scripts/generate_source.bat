@@ -9,11 +9,11 @@ IF NOT EXIST generated (
     mkdir generated
 )
 
-PUSHD "scerrcc"
+PUSHD "Starcounter.ErrorCodes.Generator"
 dotnet restore
 IF ERRORLEVEL 1 GOTO DOTNET_FAIL
 
-dotnet run ..\errorcodes.xml -mc ..\generated\errorcodes.mc -cs ..\generated\errorcodes.cs -ea ..\generated\errorcodes.ea
+dotnet run ..\errorcodes.xml -cs ..\generated\errorcodes.cs
 IF ERRORLEVEL 1 GOTO DOTNET_FAIL
 
 POPD

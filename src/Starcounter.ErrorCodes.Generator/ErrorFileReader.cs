@@ -9,9 +9,9 @@ namespace Starcounter.ErrorCodes.Generator {
     public static class ErrorFileReader {
         private static readonly Regex MultipleWhitespace = new Regex(@"\s+");
 
-        public static ErrorFile ReadErrorCodes(Stream instream) {
-            XmlReaderSettings settings;
+        public static ErrorFile ReadErrorCodes(string errorCodeFilePath) {
             XmlDocument document;
+            XmlReaderSettings settings;
             List<ErrorCode> allCodes;
 
             settings = new XmlReaderSettings();
@@ -20,21 +20,22 @@ namespace Starcounter.ErrorCodes.Generator {
             settings.IgnoreWhitespace = false;
             settings.DtdProcessing = DtdProcessing.Ignore;
 
-            document = new XmlDocument();
-            document.Load(XmlReader.Create(instream, settings));
-            document.Normalize();
-            
-            allCodes = new List<ErrorCode>();
-            foreach (XmlNode fnode in document.GetElementsByTagName("facility")) {
-                Facility facility = NodeToFacility(fnode);
-                foreach (XmlNode cnode in fnode.ChildNodes) {
-                    if (!(cnode is XmlElement)) {
-                        continue;
+            using (var xmlReader = XmlReader.Create(new FileStream(errorCodeFilePath, FileMode.Open), settings)) {
+                document = new XmlDocument();
+                document.Load(xmlReader);
+                document.Normalize();
+                
+                allCodes = new List<ErrorCode>();
+                foreach (XmlNode fnode in document.GetElementsByTagName("facility")) {
+                    Facility facility = NodeToFacility(fnode);
+                    foreach (XmlNode cnode in fnode.ChildNodes) {
+                        if (!(cnode is XmlElement)) {
+                            continue;
+                        }
+                        allCodes.Add(NodeToErrorCode(cnode, facility));
                     }
-                    allCodes.Add(NodeToErrorCode(cnode, facility));
                 }
             }
-
             return new ErrorFile(allCodes);
         }
 
