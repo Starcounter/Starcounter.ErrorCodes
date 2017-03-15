@@ -15,19 +15,7 @@ namespace Starcounter.ErrorCodes {
 
         public static ExceptionFactory ExceptionFactory { get; private set; }
 
-        private static bool TriedResolvingBadImageFormatException = false;
-        private static bool TriedResolvingFileNotFoundException = false;
         private static string DecoratedCodePattern = string.Concat("^", CodeDecorationPrefix, @"\d{3,5}$");
-
-        //[System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("scerrres.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Unicode)]
-        private static extern void FormatStarcounterErrorMessage(uint errorCode, StringBuilder buf, uint numberOfBufferCharacters);
-
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
-        static extern IntPtr GetModuleHandle(string fileName);
-
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
-        static extern IntPtr LoadLibrary(string fileName);
 
         static ErrorCode() {
             ErrorCode.ExceptionFactory = new ExceptionFactory();
@@ -398,107 +386,10 @@ namespace Starcounter.ErrorCodes {
             string messagePostfix,
             params object[] messageArguments
             ) {
-            StringBuilder buffer;
-            bool result;
-
-            buffer = new StringBuilder(1024);
-            result = TryFormatMessageFromResourceStream(errorCode, buffer);
-            if (!result) {
-                // We maintain a managed fallback if we detect that we somehow
-                // fail to invoke the unmanaged formatter. This can happen in certain
-                // cases on clients, for example if an error is triggered and the
-                // user has not connected the client to the database (in which case
-                // the error resource library will not be loaded) and the explicit
-                // try-load attempt fails.
-
-                // Standard form, if formatted successfully from resource library:
-                // ScErrTextualForm (SCERR1234): Description.
-                //
-                // Fallback format:
-                // Error 1234 has occured (SCERR1234). [Message not accessible]. Version: 2.0.123.456. Help page: http://www.starcounter.com/wiki/SCERR1234."
-
-                buffer.AppendFormat(
-                    "Error {0} has occured ({1}): [Message not accessible]. {2} {3}",
-                    errorCode,
-                    ToDecoratedCode(errorCode),
-                    ToVersionMessage(),
-                    ToHelpLinkMessage(errorCode)
-                    );
-            }
-
-            return new FactoryErrorMessage(errorCode, buffer.ToString(), messagePostfix, messageArguments);
-        }
-
-        private static bool TryFormatMessageFromResourceStream(uint errorCode, StringBuilder buffer) {
-            bool result;
-
-            // The design here is that we attempt to read the underlying resource
-            // stream and we expect it to succeed. But if it doesn't, we have an
-            // idea on how to solve two exception types: BadImageFormat and the
-            // DllNotFoundException. If any of these occur, we check if we have
-            // tried to resolve the case previously and if we have not, we'll try
-            // to explicitly load the underlying resource DLL and then we try
-            // once more.
-            //
-            // For any other type of failure/exception, we have no strategy and
-            // we simply return false.
-            //
-            // We implement no guarding of the do-once variables (i.e. the static
-            // TriedResolving... variables) since if two threads unlikely ends up
-            // competing, no harm is really done. The very worst case even possible
-            // in theory is that scerrres.dll will have an additional reference,
-            // but since we never explicitly free it, that really doesn't matter.
-
-            result = false;
-            try {
-                FormatStarcounterErrorMessage(errorCode, buffer, (uint)buffer.Capacity);
-                result = true;
-            } catch (BadImageFormatException) {
-                if (TriedResolvingBadImageFormatException == false) {
-                    TriedResolvingBadImageFormatException = true;
-
-                    result = TryExplicitlyLoadingResourceBinary();
-                    if (result) {
-                        result = TryFormatMessageFromResourceStream(errorCode, buffer);
-                    }
-                }
-            } catch (DllNotFoundException) {
-                if (TriedResolvingFileNotFoundException == false) {
-                    TriedResolvingFileNotFoundException = true;
-
-                    result = TryExplicitlyLoadingResourceBinary();
-                    if (result) {
-                        result = TryFormatMessageFromResourceStream(errorCode, buffer);
-                    }
-                }
-            } catch {
-                result = false;
-            }
-
-            return result;
-        }
-
-        private static bool TryExplicitlyLoadingResourceBinary() {
-            IntPtr moduleHandle;
-            //string resourceBinaryPath;
-
-            // By design, we catch all possible exceptions here. If any exception
-            // occur, we return false.
-
-            moduleHandle = IntPtr.Zero;
-            try {
-                // TODO: 
-                // Reimplement, with the new path to scerrres for x86.
-
-                // resourceBinaryPath = Path.GetDirectoryName(typeof(ErrorCode).Assembly.Location);
-                // if (IntPtr.Size == 4) {
-                //     resourceBinaryPath = Path.Combine(resourceBinaryPath, StarcounterEnvironment.Directories.Bit32Components);
-                // }
-
-                // moduleHandle = LoadLibrary(Path.Combine(resourceBinaryPath, "scerrres.dll"));
-            } catch { }
-
-            return moduleHandle != IntPtr.Zero;
+            
+            throw new NotImplementedException("Should call the function in the generated code.");
+            
+            //return new FactoryErrorMessage(errorCode, buffer.ToString(), messagePostfix, messageArguments);
         }
 
         private static Exception InternalCreateException(
