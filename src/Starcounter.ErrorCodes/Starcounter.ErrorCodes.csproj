@@ -12,14 +12,29 @@
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
   
-  <ItemGroup>
-    <Compile Include="..\generated\errorcodes.cs" />
-  </ItemGroup>
-
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="System.Runtime" Version="4.3.0"/>
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
   </ItemGroup>
 
-  
+  <Target Name="GenerateCode" BeforeTargets="PrepareForBuild">
+    <Message Text="Generating code..."/>
+    <PropertyGroup>
+      <XmlSourceFile>..\errorcodes.xml</XmlSourceFile>
+      <CsOutputFile>obj\ErrorCodes.g.cs</CsOutputFile>
+      <GeneratorProj>..\Starcounter.ErrorCodes.Generator\Starcounter.ErrorCodes.Generator.csproj</GeneratorProj>
+    </PropertyGroup>
+    <Exec 
+      Command="dotnet restore $(GeneratorProj)" 
+      ContinueOnError="False"
+    />
+	  <Exec 
+      Command="dotnet run --project $(GeneratorProj) $(XmlSourceFile) -cs $(CsOutputFile)"
+      Outputs="$(CsOutputFile)"
+      ContinueOnError="False"
+    />
+    <ItemGroup>
+      <Compile Include="$(CsOutputFile)" />
+    </ItemGroup>
+  </Target>
 </Project>
