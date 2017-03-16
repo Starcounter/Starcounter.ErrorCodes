@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\scerrcc\scerrcc.csproj" />
+    <ProjectReference Include="..\..\src\Starcounter.ErrorCodes.Generator\Starcounter.ErrorCodes.Generator.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Diagnostics;
 using Xunit;
 
-namespace scerrcc.Tests {
+namespace Starcounter.ErrorCodes.Generator.Tests {
     public class Tests {
         public Tests() {
             WaitForDebugger();
@@ -22,9 +22,8 @@ namespace scerrcc.Tests {
         public void TestParseErrorCodesFile() {
             ErrorFile errorFile = null;
             
-            using (FileStream stream = File.Open("errorcodes.xml", FileMode.Open)) {
-                errorFile = ErrorFileReader.ReadErrorCodes(stream);
-            }
+            errorFile = ErrorFileReader.ReadErrorCodes("errorcodes.xml");
+            
             Assert.NotNull(errorFile);
             Assert.NotEmpty(errorFile.ErrorCodes);
         }
