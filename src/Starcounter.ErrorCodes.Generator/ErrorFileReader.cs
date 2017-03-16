@@ -36,7 +36,7 @@ namespace Starcounter.ErrorCodes.Generator {
                     }
                 }
             }
-            return new ErrorFile(allCodes);
+            return new ErrorFile(errorCodeFilePath, allCodes);
         }
 
         private static ErrorCode NodeToErrorCode(XmlNode cnode, Facility facility) {

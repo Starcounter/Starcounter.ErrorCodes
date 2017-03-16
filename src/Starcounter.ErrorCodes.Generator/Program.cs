@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO;
 using System.Diagnostics;
 
 namespace Starcounter.ErrorCodes.Generator {
@@ -24,14 +25,20 @@ namespace Starcounter.ErrorCodes.Generator {
             try {
                 string srcFilePath = null;
                 string csFilePath = null;
+                ErrorFile errorFile;
+                CSharpCodeGenerator csGenerator;
 
                 CommandLine.ParseArgs(args, out srcFilePath, out csFilePath, out Program.verbose);
 
                 if (srcFilePath == null)
                     return;
 
+                srcFilePath = Path.GetFullPath(srcFilePath);
+
                 Verbose("Generating codefiles...");
-                Generator.GenerateCodeFiles(srcFilePath, csFilePath);
+                errorFile = ErrorFileReader.ReadErrorCodes(srcFilePath);
+                csGenerator = new CSharpCodeGenerator();
+                csGenerator.Generate(errorFile, csFilePath);
                 Verbose("All codefiles generated succesfully.");
             } catch (Exception e) {
                 Console.Error.WriteLine(e);

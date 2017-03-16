@@ -11,12 +11,24 @@ namespace Starcounter.ErrorCodes.Generator {
         public IList<string> RemarkParagraphs { get; private set; }
 
         public string ConstantName {
+            get { return Name; }
+        }
+
+        public string ConstantNameToUpper {
             get { return Name.ToUpper(); }
         }
 
         public uint CodeWithFacility {
             get {
                 return (Facility.Code * 1000) + Code;
+            }
+        }
+
+        public string FormattedCodeWithDescription {
+            get {
+                string formattedDesc = Description;
+                formattedDesc = formattedDesc.Replace("\"", "\\\"");
+                return string.Format("{0} (SCERR{1}): {2}", Name, CodeWithFacility, formattedDesc);
             }
         }
 
