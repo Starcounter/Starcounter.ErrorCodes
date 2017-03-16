@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text.RegularExpressions;
 
 namespace Starcounter.ErrorCodes.Generator {
     internal class Generator {
-        private static readonly Regex MultipleWhitespace = new Regex(@"\s+");
-
         internal static void GenerateCodeFiles(string srcFilePath, string csOutputFilePath) {
             ErrorFile errorFile = ErrorFileReader.ReadErrorCodes(srcFilePath);
             GenerateCSharpFile(errorFile, csOutputFilePath);
