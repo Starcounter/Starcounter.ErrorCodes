@@ -1,17 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Creates sourcefiles for errorcodes.</Description>
+    <Description>Generate sourcefiles for errorcodes.</Description>
 	  <TargetFramework>netcoreapp1.1</TargetFramework>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <!--<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>-->
     <OutputType>Exe</OutputType>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-		<!-- Neccessary until we see a fix for: https://github.com/dotnet/roslyn/issues/16040 -->
-		<PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
