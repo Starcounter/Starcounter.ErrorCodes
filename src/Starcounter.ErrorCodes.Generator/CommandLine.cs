@@ -43,7 +43,7 @@ namespace Starcounter.ErrorCodes.Generator {
             Console.Error.WriteLine("Starcounter.ErrorCodes.Generator.exe infile.xml [options]");
             Console.Error.WriteLine("Where [options] are:");
             Console.Error.WriteLine("-v             Verbose mode");
-            Console.Error.WriteLine("-cs [csfile]   Filepath for generated code c# code.");
+            Console.Error.WriteLine("-cs [csfile]   Path for file to write generated C# code to.");
         }
 
         private static void WaitForDebugger(){
