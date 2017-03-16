@@ -7,10 +7,19 @@ namespace Starcounter.ErrorCodes.Generator {
     // Can probably be removed, and instead use standard commandline parsing methods. 
     // OR altogether changed to be triggered as a task instead...
     internal static class CommandLine {
-        public static void ParseArgs(string[] args, out string srcFilePath, out string csFilePath, out bool verbose) {
+        public static void ParseArgs(
+                                string[] args,
+                                out string srcFilePath,
+                                out string csFilePath,
+                                out string cFilePath,
+                                out string hFilePath,
+                                out bool verbose) 
+                           {
             srcFilePath = null;
             verbose = false;
             csFilePath = null;
+            cFilePath = null;
+            hFilePath = null;
             
             if (args.Length == 0) {
                 PrintUsage();
@@ -24,10 +33,13 @@ namespace Starcounter.ErrorCodes.Generator {
                         verbose = true;
                         break; // handled elsewhere
                     case "-cs":
-                        if (args.Length <= (i+1))
-                            throw new ArgumentException("No argument supplied for -cs switch");
-                        csFilePath = args[i+1];
-                        i++;
+                        csFilePath = GetNextArg(args, i++);
+                        break;
+                    case "-c":
+                        cFilePath = GetNextArg(args, i++);
+                        break;
+                    case "-h":
+                        hFilePath = GetNextArg(args, i++);
                         break;
                     case "-debug":
                         WaitForDebugger();
@@ -38,12 +50,20 @@ namespace Starcounter.ErrorCodes.Generator {
             }
         }
 
+        private static string GetNextArg(string[] args, int index) {
+            if (args.Length <= (index + 1))
+                throw new ArgumentException("No argument supplied for the " + args[index] + " switch");
+            return args[index + 1];
+        }
+
         private static void PrintUsage() {
             Console.Error.WriteLine("Usage:");
             Console.Error.WriteLine("Starcounter.ErrorCodes.Generator.exe infile.xml [options]");
             Console.Error.WriteLine("Where [options] are:");
-            Console.Error.WriteLine("-v             Verbose mode");
-            Console.Error.WriteLine("-cs [csfile]   Path for file to write generated C# code to.");
+            Console.Error.WriteLine("-v          Verbose mode");
+            Console.Error.WriteLine("-cs [file]  Path for file to write generated C# code to.");
+            Console.Error.WriteLine("-c [file]   Path for file to write generated C code to.");
+            Console.Error.WriteLine("-h [file]   Path for file to write generated header to.");
         }
 
         private static void WaitForDebugger(){
