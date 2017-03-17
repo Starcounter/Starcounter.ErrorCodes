@@ -55,8 +55,8 @@ namespace Starcounter.ErrorCodes.Generator {
             }
 
             remparams = new List<string>();
-            msgnode = null;//cnode.SelectSingleNode("./message");
-            remnode = null;//cnode.SelectSingleNode("./remarks");
+            msgnode = null;
+            remnode = null;
 
             foreach (XmlNode childNode in cnode.ChildNodes) {
                 if (childNode.Name == "message") {
@@ -65,7 +65,6 @@ namespace Starcounter.ErrorCodes.Generator {
                     remnode = childNode;
                 }
             }
-
 
             if (remnode != null) {
                 foreach (XmlNode pnode in remnode.ChildNodes) {
