@@ -8,7 +8,7 @@ namespace Starcounter.ErrorCodes.Generator {
 
             writer.WriteLine("#ifndef __SCCOREERR_INTERNAL_H");
             writer.Write("#define __SCCOREERR_INTERNAL_H "); 
-            writer.WriteLine(DateTime.Now.ToString("yyyyMMdd"));
+            writer.WriteLine(errorFile.Processed.ToString("yyyyMMdd"));
             writer.WriteLine();
             writer.WriteLine("#ifndef DLL_EXPORT");
             writer.WriteLine("#if _MSC_VER >= 1500");
