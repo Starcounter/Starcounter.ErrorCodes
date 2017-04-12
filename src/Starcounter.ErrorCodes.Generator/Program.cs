@@ -13,14 +13,16 @@ namespace Starcounter.ErrorCodes.Generator {
             }
         }
 
-        static void Main(string[] args) {
+        static int Main(string[] args) {
             try {
                 var cli = new CommandLineInterface();
                 cli.Execute(args);
             } catch (Exception e) {
                 Console.Error.WriteLine(e.Message);
                 Console.Error.WriteLine();
+                return 1;
             }
+            return 0;
         }
     }
 }
