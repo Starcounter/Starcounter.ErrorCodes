@@ -29,7 +29,7 @@ namespace Starcounter.ErrorCodes.Generator {
                 CommandOptionType.SingleValue
             );
             headerOption = commandLineApplication.Option(
-                "-h | --header <headerfile>", "Path to write generated header to.", 
+                "-header | --header <headerfile>", "Path to write generated header to.", 
                 CommandOptionType.SingleValue
             );
             verboseOption = commandLineApplication.Option(
@@ -53,7 +53,7 @@ namespace Starcounter.ErrorCodes.Generator {
                 int i = commandLineApplication.Execute(args);
                 return i;
             } catch (Exception) {
-                commandLineApplication.ShowHelp();
+//                commandLineApplication.ShowHelp();
                 throw;
             }
         }
@@ -81,7 +81,7 @@ namespace Starcounter.ErrorCodes.Generator {
             Verbose("Reading file with errorcodes ({0})", srcFilePath);
             errorFile = ErrorFileReader.ReadErrorCodes(srcFilePath);
 
-            if (csharpOption != null) {
+            if (csharpOption.HasValue()) {
                 Verbose("Generating cs code to {0}", csharpOption.Value());
                 generator = new CSharpCodeGenerator();
                 generator.Generate(errorFile, csharpOption.Value());
