@@ -1,13 +1,4 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <XmlSourceFile>..\errorcodes.xml</XmlSourceFile>
-    <NativeOutputFolder>obj\Content</NativeOutputFolder>
-		<NativeOutputFile>$(NativeOutputFolder)\sccoreerr.g.c</NativeOutputFile>
-		<HeaderOutputFile>$(NativeOutputFolder)\sccoreerr.g.h</HeaderOutputFile>
-    <CsOutputFile>obj\Error.g.cs</CsOutputFile>
-    <GeneratorProj>..\Starcounter.ErrorCodes.Generator\Starcounter.ErrorCodes.Generator.csproj</GeneratorProj>
-  </PropertyGroup>
-
   <Target Name="RestoreGenerator" BeforeTargets="Restore">
     <Exec
       Command="dotnet restore $(GeneratorProj)"
@@ -16,21 +7,24 @@
   </Target>
 
   <Target Name="CreateContentOutputFolder" BeforeTargets="GenerateCode">
-    <MakeDir Directories="$(NativeOutputFolder)" />
+    <MakeDir Directories="$(GeneratedOutputFolder)" />
   </Target>
 
   <Target Name="GenerateCode" BeforeTargets="BeforeBuild">
 	  <Exec
-      Command="dotnet run --project $(GeneratorProj) $(XmlSourceFile) --csharp $(CsOutputFile) --c $(NativeOutputFile) --header $(HeaderOutputFile)"
-      Outputs="$(CsOutputFile)"
+      Command="dotnet run --project $(GeneratorProj) $(XmlSourceFile) --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath)"
+      Outputs="$(CsFilePath);$(CFilePath);$(HFilePath)"
       ContinueOnError="False"
     />
     <ItemGroup>
-      <Compile Include="$(CsOutputFile)" />
+      <Compile Include="$(CsFilePath)" />
     </ItemGroup>
   </Target>
 
   <Target Name="CleanGeneratedCode" AfterTargets="Clean">
-    <Delete Files="$(CsOutputFile);$(NativeOutputFile);$(HeaderOutputFile)" />
+    <ItemGroup>
+      <FilesToDelete Include="$(GeneratedOutputFolder)**/*.g.*" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
   </Target>
 </Project>
