@@ -6,6 +6,12 @@
     <TargetFrameworks>netstandard1.6;net46</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <MajorVersion>0</MajorVersion>
+    <GitCommitBaseline>34</GitCommitBaseline>
+    <GitCommitCount>-1</GitCommitCount>
+  </PropertyGroup>
   
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <!-- Neccessary until we see a fix for: https://github.com/dotnet/roslyn/issues/16040 -->
@@ -15,6 +21,30 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <GenerateNuspecDependsOn>SetVersionInfo;$(GenerateNuspecDependsOn)</GenerateNuspecDependsOn>
+  </PropertyGroup>
+
+  <Target Name="SetVersionInfo" BeforeTargets="BeforeBuild">
+    <Message Text="CommitCount: $(GitCommitCount)" Importance="High" />
+    <Message Text="Version: $(Version)" Importance="High" />
+    <Message Text="Packversion: $(PackageVersion)" Importance="High" />
+
+    <Exec
+      Command="git rev-list --count HEAD"
+      ContinueOnError="False"
+      ConsoleToMSBuild="true"
+    >
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitCommitCount" />
+    </Exec>
+
+    <PropertyGroup>
+      <MinorVersion>$(GitCommitCount)</MinorVersion>
+      <Version>$(MajorVersion).$(MinorVersion).0</Version>
+      <PackageVersion>$(Version)</PackageVersion>
+    </PropertyGroup>
+  </Target>
 
   <Import Project="..\..\build\generate.props" />
   <Import Project="..\..\build\pack.props" />

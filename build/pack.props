@@ -3,7 +3,6 @@
   
 	<!-- Properties we respect being customized -->
   <PropertyGroup>
-    <PackVersion>0.0.0</PackVersion>
     <PackageOutputPath Condition="'$(PackageOutputPath)' == ''">$(MsBuildThisFileDirectory)..\artifacts</PackageOutputPath>
   </PropertyGroup>
   
