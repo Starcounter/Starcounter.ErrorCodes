@@ -19,4 +19,5 @@
   <Import Project="..\..\build\generate.props" />
   <Import Project="..\..\build\pack.props" />
   <Import Project="..\..\build\generate.targets" />
+  <Import Project="..\..\build\pack.targets" />
 </Project>
