@@ -1,0 +1,38 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--<Import Project="$(MsBuildThisFileDirectory)generate.props" />-->
+  
+	<!-- Properties we respect being customized -->
+  <PropertyGroup>
+    <PackVersion>0.0.0</PackVersion>
+    <PackageOutputPath Condition="'$(PackageOutputPath)' == ''">$(MsBuildThisFileDirectory)..\artifacts</PackageOutputPath>
+  </PropertyGroup>
+  
+  <!-- Static properties -->
+  <PropertyGroup>
+    <ThisRepoUri>https://github.com/Starcounter/Starcounter.ErrorCodes</ThisRepoUri>
+    <PackageProjectUrl>$(ThisRepoUri)</PackageProjectUrl>
+    <RepositoryUrl>$(ThisRepoUri)</RepositoryUrl>
+    <Authors>Starcounter</Authors>
+    <IncludeSymbols>true</IncludeSymbols> 
+  </PropertyGroup>
+
+  <!-- Source and generated files that should be included in the package -->
+  <ItemGroup>
+    <None Include="$(XmlSourceFile)">
+      <Pack>true</Pack>
+      <PackagePath>content\source\</PackagePath>
+    </None>
+    <None Include="staticcontent/*">
+      <Pack>true</Pack>
+      <PackagePath>content\sccoreerr\</PackagePath>
+    </None>
+    <None Include="$(CFilePath)">
+      <Pack>true</Pack>
+      <PackagePath>content\sccoreerr\sccoreerr.c</PackagePath>
+    </None>
+    <None Include="$(HFilePath)">
+      <Pack>true</Pack>
+      <PackagePath>content\sccoreerr\sccoreerr.h</PackagePath>
+    </None>
+  </ItemGroup>
+</Project>

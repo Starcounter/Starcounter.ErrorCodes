@@ -16,5 +16,7 @@
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
   </ItemGroup>
 
+  <Import Project="..\..\build\generate.props" />
+  <Import Project="..\..\build\pack.props" />
   <Import Project="..\..\build\generate.targets" />
 </Project>

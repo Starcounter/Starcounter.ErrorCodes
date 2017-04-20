@@ -1,0 +1,11 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <GeneratorProj>..\Starcounter.ErrorCodes.Generator\Starcounter.ErrorCodes.Generator.csproj</GeneratorProj>
+    <XmlSourceFile>..\errorcodes.xml</XmlSourceFile>
+    <GeneratedOutputFolder>obj\Generated\</GeneratedOutputFolder>
+    <GeneratedFilename>errorcodes</GeneratedFilename>
+    <CsFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.cs</CsFilePath>
+    <CFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.c</CFilePath>
+    <HFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.h</HFilePath>
+  </PropertyGroup>
+</Project>
