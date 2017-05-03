@@ -95,7 +95,9 @@ namespace Starcounter.ErrorCodes {
                             break;
                         case Error.SCERRBADCOMMANDLINESYNTAX:
                         case Error.SCERRBADCOMMANDLINEFORMAT:
-                            ex = new Exception(msg, innerException);  // TODO:
+                            // TODO: Creates a specific exception that is not available here.
+                            //       Make this lookup overridable?
+                            ex = new Exception(msg, innerException);
                             //ex = new InvalidCommandLineException(msg, innerException) { ErrorCode = errorCode };
                             break;
                         case Error.SCERRWRONGERRORMESSAGEFORMAT:
