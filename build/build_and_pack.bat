@@ -5,7 +5,7 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
 
-SET GitCommitBaseline=35
+SET GitCommitBaseline=39
 
 SET Configuration=%1
 IF "%Configuration%"=="" (
@@ -22,7 +22,7 @@ IF "%2"=="" (
     FOR /F "tokens=* USEBACKQ" %%F IN (`git rev-list --count HEAD`) DO (
         SET GitCommitCount=%%F
     )
-    SET /a MinorVersion=%GitCommitCount%-%GitCommitBaseline%
+    SET /a MinorVersion=!GitCommitCount!-!GitCommitBaseline!
     SET VersionText=!MajorVersion!.!MinorVersion!.0
 ) ELSE (
     SET VersionText=%2
