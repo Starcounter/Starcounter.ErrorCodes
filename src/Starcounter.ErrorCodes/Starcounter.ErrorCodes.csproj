@@ -6,7 +6,7 @@
     <TargetFrameworks>netstandard1.6;net46</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <!-- Neccessary until we see a fix for: https://github.com/dotnet/roslyn/issues/16040 -->
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
@@ -19,4 +19,5 @@
   <Import Project="..\..\build\generate.props" />
   <Import Project="..\..\build\pack.props" />
   <Import Project="..\..\build\generate.targets" />
+  <Import Project="..\..\build\pack.targets" />
 </Project>
