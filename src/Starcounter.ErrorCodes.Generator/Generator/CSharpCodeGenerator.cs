@@ -30,9 +30,6 @@ namespace Starcounter.ErrorCodes.Generator {
         private void WriteFacilites(TextWriter writer, ErrorFile errorFile) {
             List<string> processedFacilityNames = new List<string>();
             
-            // TODO:
-            // Facility == Category
-            // Not sure why we generate Category while calling everything else Facility
             writer.WriteIndented("public enum Category {", Indent2);
             foreach (ErrorCode ec in errorFile.ErrorCodes) {
                 if (processedFacilityNames.Contains(ec.Facility.Name))
