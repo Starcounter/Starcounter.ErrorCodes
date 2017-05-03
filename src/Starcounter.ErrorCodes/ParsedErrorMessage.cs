@@ -77,8 +77,8 @@ namespace Starcounter.ErrorCodes {
             // not, parsing will fail.
 
             helplink = ErrorCode.ToHelpLink(code);
-            //version = CurrentVersion.Version;
-            version = "2.x.x"; // TODO:
+
+            version = ErrorCode.GetStarcounterVersion(); 
             versionMessage = ErrorCode.ToVersionMessage();
             indexToDecoration = errorMessage.LastIndexOf(versionMessage);
             if (indexToDecoration == -1) throw ToParsingException(errorMessage);

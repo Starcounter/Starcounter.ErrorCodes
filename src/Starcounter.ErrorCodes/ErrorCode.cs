@@ -84,10 +84,7 @@ namespace Starcounter.ErrorCodes {
         /// /* Output: Version: 2.0.123. */
         /// </example>
         public static string ToVersionMessage() {
-            // TODO: 
-            // How do we get the current starcounter version. Use 'star --version'?
-            //return string.Concat("Version: ", CurrentVersion.Version, ".");
-            return string.Concat("Version: ", "2.x.x", ".");
+            return string.Concat("Version: ", GetStarcounterVersion(), ".");
         }
 
         /// <summary>
@@ -481,10 +478,15 @@ namespace Starcounter.ErrorCodes {
             exception.HelpLink = ErrorCode.ToHelpLink(errorCode);
             exception.Source = string.Format(
                 "Starcounter({0})",
-                //CurrentVersion.Version
-                "2.x.x" // TODO:
+                GetStarcounterVersion()
                 );
             return exception;
+        }
+
+        internal static string GetStarcounterVersion(){
+            // TODO: How do we get the starcounter version.
+            // Use 'star --version' or check the calling assembly version?
+            return "x.x.x";
         }
     }
 }
