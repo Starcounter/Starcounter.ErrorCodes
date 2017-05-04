@@ -19,19 +19,19 @@
   <ItemGroup>
     <None Include="$(XmlSourceFile)">
       <Pack>true</Pack>
-      <PackagePath>content\source\</PackagePath>
+      <PackagePath>files\source\</PackagePath>
     </None>
     <None Include="staticcontent/*">
       <Pack>true</Pack>
-      <PackagePath>content\sccoreerr\</PackagePath>
+      <PackagePath>files\sccoreerr\</PackagePath>
     </None>
     <None Include="$(CFilePath)">
       <Pack>true</Pack>
-      <PackagePath>content\sccoreerr\sccoreerr.c</PackagePath>
+      <PackagePath>files\sccoreerr\sccoreerr.c</PackagePath>
     </None>
     <None Include="$(HFilePath)">
       <Pack>true</Pack>
-      <PackagePath>content\sccoreerr\sccoreerr.h</PackagePath>
+      <PackagePath>files\sccoreerr\sccoreerr.h</PackagePath>
     </None>
   </ItemGroup>
 </Project>
