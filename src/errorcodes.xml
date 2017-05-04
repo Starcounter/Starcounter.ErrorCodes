@@ -573,7 +573,7 @@
     </code>
     <code hex="0017" severity="Error" name="ScErrDatabaseLangUnsupported">
       <message>
-        One of more of the languages the database is configured for isn't supported by
+        One or more of the languages the database is configured for isn't supported by
         the current system.
       </message>
     </code>
@@ -1351,6 +1351,13 @@
     </code>
     <code hex="0096" severity="Error" name="ScErrInvokeApplicationHost">
       <message>Failed to create/invoke the application host. See IApplicationHost documentation on its constraints.</message>
+    </code>
+    <code hex="0097" severity="Error" name="ScErrApplicationAlreadyHosted">
+      <message>Unable to start the application host because the host is already running.</message>
+      <remarks>
+        This error usually indicate an app tries to start a host when the app is is either already
+        running in the shared host, or has already started the host previously.
+      </remarks>
     </code>
   </facility>
 
@@ -2769,11 +2776,11 @@
 -->
     <code hex="00B1" severity="Error" name="ScErrSchemaCodeMismatch">
       <message>
-        Operation failed be because input does not match schema.
+        Operation failed because input does not match schema.
       </message>
       <remarks>
         <para>
-          Occurs when for example a string attribute is accessed as an integer.
+          Occurs when, for example, a string attribute is accessed as an integer.
         </para>
       </remarks>
     </code>
@@ -3353,6 +3360,13 @@
         The database name must follow this [a-z,A-Z,0-9] naming scheme.
       </remarks>
     </code>
+    <code hex="0131" severity="Error" name="ScErrCantRunSharedAppHost">
+      <message>Illegal attempt to run the shared app code host.</message>
+      <remarks>
+        The shared app code host is managed by Starcounter and can not be explicitly
+        executed by user code.
+      </remarks>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
@@ -3797,6 +3811,9 @@
 	</code>
 	<code hex="002A" severity="Error" name="ScErrInvalidStatement">
 	  <message>Given SQL statement is of unexpected type. Another API function should be called.</message>
+	</code>
+	<code hex="002B" severity="Error" name="ScErrMetadataHasntBeenCreated">
+	  <message>Meta-data hasn't been created or created incompletely for this database.</message>
 	</code>
   </facility>
 
@@ -4361,6 +4378,16 @@
       <message>
         Creating a new database failed. The maximum number of databases that
         can coexist on a given server have been reached.
+      </message>
+    </code>
+    <code hex="002A" severity="Error" name="ScErrFileInInstallationNotFound">
+      <message>
+        Unable to find file expected to be part of installation.
+      </message>
+    </code>
+	<code hex="002B" severity="Error" name="ScErrHostProcessNotRunning">
+      <message>
+        The specified code host process is not running.
       </message>
     </code>
   </facility>
@@ -4942,6 +4969,32 @@
     <code hex="0009" severity="Error" name="ScErrSchemasDoNotMatch">
       <message>
         Schema of given type does not match with schema of the existing type.
+      </message>
+    </code>
+    <code hex="000A" severity="Error" name="ScErrMetaschemaVersionMismatch">
+      <message>
+        The version of the metaschema in the database does not match 
+		the metaschema version in Starcounter's binary.
+      </message>
+    </code>
+    <code hex="000B" severity="Error" name="ScErrIndexExistsOnColumn">
+      <message>
+        The column is a part of an index.
+      </message>
+    </code>
+    <code hex="000C" severity="Error" name="ScErrTableIsReferenced">
+      <message>
+        There are references to the table.
+      </message>
+    </code>
+    <code hex="000D" severity="Error" name="ScErrTableHasChildren">
+      <message>
+        There are tables inheriting this table.
+      </message>
+    </code>
+    <code hex="000E" severity="Error" name="ScErrColumnIsMapped">
+      <message>
+        There is a mapped property on this column.
       </message>
     </code>
   </facility>
