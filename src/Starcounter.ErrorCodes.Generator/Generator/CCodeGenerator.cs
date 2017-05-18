@@ -19,7 +19,7 @@ namespace Starcounter.ErrorCodes.Generator {
             writer.WriteLine();
             writer.WriteLine("#include <stdio.h>");
             writer.WriteLine("#include <string.h>");
-            writer.WriteLine("#include \"{0}\"", dateStr);
+            writer.WriteLine("#include \"{0}\"", "sccoreerr.h");
             writer.WriteLine();
             writer.WriteLine("#define __SCCOREERR_INTERNAL_C {0}", dateStr);
             writer.WriteLine("#if __SCCOREERR_INTERNAL_H != __SCCOREERR_INTERNAL_C");
@@ -49,7 +49,7 @@ namespace Starcounter.ErrorCodes.Generator {
             }
 
             writer.WriteIndented("}", INDENT);
-            writer.WriteIndented("memset(s_unknown_text, 0, sizeof(s_unknown_text))", INDENT);
+            writer.WriteIndented("memset(s_unknown_text, 0, sizeof(s_unknown_text));", INDENT);
             writer.WriteIndented("sprintf(s_unknown_text, \"(SCERR%%ld)\", ec);", INDENT);
             writer.WriteIndented("return s_unknown_text;", INDENT);
             writer.WriteLine("}");
