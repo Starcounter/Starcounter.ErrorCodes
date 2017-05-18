@@ -27,11 +27,11 @@
     </None>
     <None Include="$(CFilePath)">
       <Pack>true</Pack>
-      <PackagePath>files\sccoreerr\sccoreerr.c</PackagePath>
+      <PackagePath>files\sccoreerr\sccoreerr_gen.c</PackagePath>
     </None>
     <None Include="$(HFilePath)">
       <Pack>true</Pack>
-      <PackagePath>files\sccoreerr\sccoreerr.h</PackagePath>
+      <PackagePath>files\sccoreerr\sccoreerr_gen.h</PackagePath>
     </None>
   </ItemGroup>
 </Project>

@@ -19,7 +19,7 @@ namespace Starcounter.ErrorCodes.Generator {
             writer.WriteLine();
             writer.WriteLine("#include <stdio.h>");
             writer.WriteLine("#include <string.h>");
-            writer.WriteLine("#include \"{0}\"", "sccoreerr.h");
+            writer.WriteLine("#include \"{0}\"", "sccoreerr_gen.h");
             writer.WriteLine();
             writer.WriteLine("#define __SCCOREERR_INTERNAL_C {0}", dateStr);
             writer.WriteLine("#if __SCCOREERR_INTERNAL_H != __SCCOREERR_INTERNAL_C");
