@@ -5,7 +5,14 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
 
-SET GitCommitBaseline=39
+SET GitCommitBaseline=53
+SET MajorVersion=0
+SET PatchVersion=0
+
+:: TODO! Dont use hardcoded path.
+pushd ..\artifacts
+IF EXIST *.nupkg DEL *.nupkg
+popd
 
 SET Configuration=%1
 IF "%Configuration%"=="" (
@@ -13,17 +20,11 @@ IF "%Configuration%"=="" (
 )
 
 IF "%2"=="" (
-    IF EXIST "majorversion.txt" (
-        SET /p MajorVersion=<majorversion.txt
-    ) ELSE (
-        SET MajorVersion=0
-    )
-
     FOR /F "tokens=* USEBACKQ" %%F IN (`git rev-list --count HEAD`) DO (
         SET GitCommitCount=%%F
     )
     SET /a MinorVersion=!GitCommitCount!-!GitCommitBaseline!
-    SET VersionText=!MajorVersion!.!MinorVersion!.0
+    SET VersionText=!MajorVersion!.!MinorVersion!.!PatchVersion!
 ) ELSE (
     SET VersionText=%2
 )
@@ -33,6 +34,7 @@ ECHO Version: %VersionText%
 
 pushd ..\src\Starcounter.ErrorCodes
 
+dotnet restore 
 dotnet clean /p:Configuration=%Configuration%
 dotnet pack /p:Version=%VersionText% /p:Configuration=%Configuration%
 
