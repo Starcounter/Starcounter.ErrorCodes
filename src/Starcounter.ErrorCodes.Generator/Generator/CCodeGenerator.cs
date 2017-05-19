@@ -50,7 +50,7 @@ namespace Starcounter.ErrorCodes.Generator {
 
             writer.WriteIndented("}", INDENT);
             writer.WriteIndented("memset(s_unknown_text, 0, sizeof(s_unknown_text));", INDENT);
-            writer.WriteIndented("sprintf(s_unknown_text, \"(SCERR%%ld)\", ec);", INDENT);
+            writer.WriteIndented("sprintf(s_unknown_text, \"(SCERR%ld)\", ec);", INDENT);
             writer.WriteIndented("return s_unknown_text;", INDENT);
             writer.WriteLine("}");
         }
