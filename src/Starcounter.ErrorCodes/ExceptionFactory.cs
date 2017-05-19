@@ -93,13 +93,6 @@ namespace Starcounter.ErrorCodes {
                         case Error.SCERRBINDIRENVNOTFOUND:
                             ex = new InvalidOperationException(msg, innerException);
                             break;
-                        case Error.SCERRBADCOMMANDLINESYNTAX:
-                        case Error.SCERRBADCOMMANDLINEFORMAT:
-                            // TODO: Creates a specific exception that is not available here.
-                            //       Make this lookup overridable?
-                            ex = new Exception(msg, innerException);
-                            //ex = new InvalidCommandLineException(msg, innerException) { ErrorCode = errorCode };
-                            break;
                         case Error.SCERRWRONGERRORMESSAGEFORMAT:
                             ex = new FormatException(msg, innerException);
                             break;
