@@ -80,7 +80,7 @@ namespace Starcounter.ErrorCodes {
 
         /// <inheritdoc />
         public override string Version {
-            get { throw new NotImplementedException(); }
+            get { return ErrorCode.ExceptionFactory.StarcounterVersion; }
         }
 
         /// <summary>

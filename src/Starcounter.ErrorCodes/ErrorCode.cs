@@ -84,7 +84,7 @@ namespace Starcounter.ErrorCodes {
         /// /* Output: Version: 2.0.123. */
         /// </example>
         public static string ToVersionMessage() {
-            return string.Concat("Version: ", GetStarcounterVersion(), ".");
+            return string.Concat("Version: ", ExceptionFactory.StarcounterVersion, ".");
         }
 
         /// <summary>
@@ -384,9 +384,8 @@ namespace Starcounter.ErrorCodes {
             params object[] messageArguments
             ) {
             
-            throw new NotImplementedException("Should call the function in the generated code.");
-            
-            //return new FactoryErrorMessage(errorCode, buffer.ToString(), messagePostfix, messageArguments);
+            string msg = Error.ToMessage(errorCode);
+            return new FactoryErrorMessage(errorCode, msg, messagePostfix, messageArguments);
         }
 
         private static Exception InternalCreateException(
@@ -478,15 +477,9 @@ namespace Starcounter.ErrorCodes {
             exception.HelpLink = ErrorCode.ToHelpLink(errorCode);
             exception.Source = string.Format(
                 "Starcounter({0})",
-                GetStarcounterVersion()
+                ExceptionFactory.StarcounterVersion
                 );
             return exception;
-        }
-
-        internal static string GetStarcounterVersion(){
-            // TODO: How do we get the starcounter version.
-            // Use 'star --version' or check the calling assembly version?
-            return "x.x.x";
         }
     }
 }

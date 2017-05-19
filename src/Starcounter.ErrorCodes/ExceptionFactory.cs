@@ -123,6 +123,13 @@ namespace Starcounter.ErrorCodes {
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        public virtual string StarcounterVersion{
+            get { return "0.0.0"; }
+        }
+
+        /// <summary>
         /// Decorates the exception.
         /// </summary>
         /// <param name="exception">The exception.</param>
