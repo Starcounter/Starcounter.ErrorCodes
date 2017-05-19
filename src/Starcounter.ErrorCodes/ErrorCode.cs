@@ -43,11 +43,7 @@ namespace Starcounter.ErrorCodes {
         }
 
         public static string ToHelpLink(uint errorCode) {
-            return string.Format("{0}/SCERR{1}",
-                //StarcounterEnvironment.InternetAddresses.StarcounterWiki,
-                "https://github.com/Starcounter/Starcounter/wiki", // TODO: Keep, remove?
-                errorCode
-                );
+            return string.Format("https://docs.starcounter.io/search/?query=SCERR{0}", errorCode);
         }
 
         /// <summary>
