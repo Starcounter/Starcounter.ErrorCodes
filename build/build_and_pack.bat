@@ -5,11 +5,10 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
 
-SET GitCommitBaseline=53
+SET GitCommitBaseline=57
 SET MajorVersion=0
 SET PatchVersion=0
 
-:: TODO! Dont use hardcoded path.
 pushd ..\artifacts
 IF EXIST *.nupkg DEL *.nupkg
 popd
