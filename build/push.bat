@@ -8,6 +8,11 @@ IF "%MYGET_API_KEY%"=="" (
 	EXIT /b 0
 )
 
+IF "%GIT_ERRORCODES_BRANCH%" NEQ "develop" (
+    ECHO Not building main develop branch. Skipping push.
+    EXIT /b 0
+)
+
 dotnet nuget push --source %NUGET_URL% --api-key %MYGET_API_KEY%  ..\artifacts\
 
 IF ERRORLEVEL 1 (
