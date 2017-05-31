@@ -1,0 +1,30 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="RestoreGenerator" BeforeTargets="Restore">
+    <Exec
+      Command="dotnet restore $(GeneratorProj)"
+      ContinueOnError="False"
+    />
+  </Target>
+
+  <Target Name="CreateContentOutputFolder" BeforeTargets="GenerateCode">
+    <MakeDir Directories="$(GeneratedOutputFolder)" />
+  </Target>
+
+  <Target Name="GenerateCode" BeforeTargets="BeforeBuild">
+	  <Exec
+      Command="dotnet run --project $(GeneratorProj) $(XmlSourceFile) --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath)"
+      Outputs="$(CsFilePath);$(CFilePath);$(HFilePath)"
+      ContinueOnError="False"
+    />
+    <ItemGroup>
+      <Compile Include="$(CsFilePath)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CleanGeneratedCode" AfterTargets="Clean">
+    <ItemGroup>
+      <FilesToDelete Include="$(GeneratedOutputFolder)**/*.g.*" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+  </Target>
+</Project>
