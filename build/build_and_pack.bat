@@ -5,7 +5,7 @@
 @ECHO OFF
 SETLOCAL EnableDelayedExpansion
 
-SET GitCommitBaseline=64
+SET GitCommitBaseline=66
 SET MajorVersion=0
 SET PatchVersion=0
 
