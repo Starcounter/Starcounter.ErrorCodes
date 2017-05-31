@@ -4,12 +4,12 @@ SET "NUGET_URL=https://www.myget.org/F/starcounter/api/v2/package"
 :: SET "NUGET_SS_URL=https://www.myget.org/F/starcounter/symbols/api/v2/package"
 
 IF "%MYGET_API_KEY%"=="" (
-	ECHO Myget API key not set. Skipping push.
+	ECHO Myget API key not set. Skipping push
 	EXIT /b 0
 )
 
 IF "%GIT_ERRORCODES_BRANCH%" NEQ "master" (
-    ECHO Not building main branch ('master'). Skipping push.
+    ECHO Not building main branch 'master'. Skipping push.
     EXIT /b 0
 )
 
