@@ -8,8 +8,8 @@ IF "%MYGET_API_KEY%"=="" (
 	EXIT /b 0
 )
 
-IF "%GIT_ERRORCODES_BRANCH%" NEQ "develop" (
-    ECHO Not building main develop branch. Skipping push.
+IF "%GIT_ERRORCODES_BRANCH%" NEQ "master" (
+    ECHO Not building main branch ('master'). Skipping push.
     EXIT /b 0
 )
 
