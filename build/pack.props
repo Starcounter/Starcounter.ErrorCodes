@@ -12,7 +12,7 @@
     <PackageProjectUrl>$(ThisRepoUri)</PackageProjectUrl>
     <RepositoryUrl>$(ThisRepoUri)</RepositoryUrl>
     <Authors>Starcounter</Authors>
-    <IncludeSymbols>true</IncludeSymbols> 
+    <IncludeSymbols>false</IncludeSymbols> 
   </PropertyGroup>
 
   <!-- Source and generated files that should be included in the package -->
