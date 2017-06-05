@@ -63,14 +63,14 @@ namespace Starcounter.ErrorCodes {
             }
 
             // Get the error code from the header
-            foreach (var number in Regex.Split(header, @"\D+")) {
-                if (string.IsNullOrEmpty(number))
-                    continue;
-
-                if (code != 0) throw ToParsingException(errorMessage);
-
-                code = uint.Parse(number);
-            }
+            
+            // We expect 1 match with 3 groups, where the last group will be the digits of the code.
+            // If not, we have an invalid message that does not contain a Starcounter specific code.
+            MatchCollection matches = Regex.Matches(header, @"(?i)SC(ERR|WARN)(\d+)");
+            if (matches.Count != 1 || matches[0].Groups.Count != 3) throw ToParsingException(errorMessage);
+            
+            string number = matches[0].Groups[2].Value; // Both indexes are verified in the statement above.
+            code = uint.Parse(number);
 
             // Get the decoration. The parsing of the message assumes
             // the message string is from the current version; if it is
