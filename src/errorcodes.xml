@@ -3367,6 +3367,11 @@
         executed by user code.
       </remarks>
     </code>
+    <code hex="0132" severity="Error" name="ScErrNonPublicCodeProperty">
+      <message>
+        Only public code properties in database classes are allowed.
+      </message>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
