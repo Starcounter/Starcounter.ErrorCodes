@@ -9,6 +9,8 @@ SET GitCommitBaseline=70
 SET MajorVersion=0
 SET PatchVersion=0
 
+IF NOT EXIST ..\artifacts MKDIR ..\artifacts
+
 pushd ..\artifacts
 IF EXIST *.nupkg DEL *.nupkg
 popd
