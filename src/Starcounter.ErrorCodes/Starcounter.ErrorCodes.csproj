@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Library containing Starcounter errorcodes and utilities for creating and handling them.</Description>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard1.2;net45;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0;net45;net46</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
