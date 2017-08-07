@@ -452,14 +452,14 @@ namespace Starcounter.ErrorCodes {
             // Since this targets our own developers, we just use asserts of the Trace API to
             // check all is correct.
 
-            Trace.Assert(ex != null);
-            Trace.Assert(
+            Debug.Assert(ex != null);
+            Debug.Assert(
                 !ex.GetType().FullName.Equals("Starcounter.DbException"),
                 "Do not use ErrorCode.ToException API with custom exception factory to create DbException.");
-            Trace.Assert(
+            Debug.Assert(
                 !string.IsNullOrEmpty(ex.Message),
                 "Message must be specified and must contain the message passed to the custom exception factory.");
-            Trace.Assert(
+            Debug.Assert(
                 ex.Message.Contains(msg),
                 "Message must contain the message passed to the custom exception factory.");
 

@@ -3,20 +3,11 @@
   <PropertyGroup>
     <Description>Library containing Starcounter errorcodes and utilities for creating and handling them.</Description>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard1.6;net45;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.2;net45;net46</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <!-- Neccessary until we see a fix for: https://github.com/dotnet/roslyn/issues/16040 -->
-    <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
-  </PropertyGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
-  </ItemGroup>
 
   <Import Project="..\..\build\generate.props" />
   <Import Project="..\..\build\pack.props" />
