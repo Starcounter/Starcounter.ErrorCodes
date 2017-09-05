@@ -1359,6 +1359,9 @@
         running in the shared host, or has already started the host previously.
       </remarks>
     </code>
+    <code hex="0098" severity="Error" name="ScErrAppWithoutSchema">
+      <message>The application assembly did not contain expected resource stream with schema.</message>
+    </code>
   </facility>
 
   <!-- I/O error codes. -->
