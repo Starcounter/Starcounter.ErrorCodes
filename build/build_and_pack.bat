@@ -66,7 +66,7 @@ IF ERRORLEVEL 1 (
     GOTO FAILURE
 )
 
-dotnet pack /p:Version=%VersionText% /p:Configuration=%Configuration%
+dotnet pack /p:Version=%VersionText% /p:Configuration=%Configuration% /m:1
 IF ERRORLEVEL 1 (
     ECHO Build and pack failed.
     GOTO FAILURE
