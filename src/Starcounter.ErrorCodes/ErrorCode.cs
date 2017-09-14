@@ -43,7 +43,7 @@ namespace Starcounter.ErrorCodes {
         }
 
         public static string ToHelpLink(uint errorCode) {
-            return string.Format("https://docs.starcounter.io/search/?query=SCERR{0}", errorCode);
+            return string.Format("https://docs.starcounter.io/?q=SCERR{0}", errorCode);
         }
 
         /// <summary>
