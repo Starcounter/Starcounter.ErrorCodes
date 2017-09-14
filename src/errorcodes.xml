@@ -4815,6 +4815,11 @@
         'DefaultTemplate.{memberpath}.Bind = "{binding-path}";'.
       </message>
     </code>
+    <code hex="0028" severity="Error" name="ScErrAlreadyWeaved">
+      <message>
+        The given assembly is already weaved.
+      </message>
+    </code>
   </facility>
     <!-- Error codes related to network gateway -->
     <facility name="NetworkGateway" hex="000D">
