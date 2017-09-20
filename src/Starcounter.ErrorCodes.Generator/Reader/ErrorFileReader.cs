@@ -20,7 +20,7 @@ namespace Starcounter.ErrorCodes.Generator {
             settings.IgnoreWhitespace = false;
             settings.DtdProcessing = DtdProcessing.Ignore;
 
-            using (var xmlReader = XmlReader.Create(new FileStream(errorCodeFilePath, FileMode.Open), settings)) {
+            using (var xmlReader = XmlReader.Create(new FileStream(errorCodeFilePath, FileMode.Open, FileAccess.Read), settings)) {
                 document = new XmlDocument();
                 document.Load(xmlReader);
                 document.Normalize();
