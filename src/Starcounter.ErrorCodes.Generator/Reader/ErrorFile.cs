@@ -12,5 +12,11 @@ namespace Starcounter.ErrorCodes.Generator {
             this.SourcePath = sourcePath;
             this.Processed = DateTime.Now;
         }
+
+        public int Count {
+            get {
+                return (ErrorCodes != null)?ErrorCodes.Count:0;
+            }
+        }
     }
 }
