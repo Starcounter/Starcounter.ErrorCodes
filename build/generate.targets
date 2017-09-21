@@ -27,7 +27,7 @@
 
     <PropertyGroup>
       <PatchNumber>$([System.IO.File]::ReadAllText('$(CountFilePath)'))</PatchNumber>
-      <VersionPrefix>$(VersionPrefix).$(PatchNumber)</VersionPrefix>
+      <Version>$(VersionPrefix).$(PatchNumber)</Version>
     </PropertyGroup>
   </Target>
 
