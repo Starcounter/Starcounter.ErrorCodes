@@ -13,6 +13,7 @@ namespace Starcounter.ErrorCodes.Generator {
         private CommandOption verboseOption;
         private CommandOption helpOption;
         private CommandOption debugOption;
+        private CommandOption countOption;
         
         public CommandLineInterface() {
             commandLineApplication = new CommandLineApplication();
@@ -36,10 +37,15 @@ namespace Starcounter.ErrorCodes.Generator {
                 "-v | --verbose", "Verbose mode.", 
                 CommandOptionType.NoValue
             );
+            countOption = commandLineApplication.Option(
+                "-cnt | --count <file>", "Path to write the number of errorcodes to.",
+                CommandOptionType.SingleValue
+            );
             debugOption = commandLineApplication.Option(
                 "-d | --debug", "Wait until debugger is attached.", 
                 CommandOptionType.NoValue
             );
+
             debugOption.ShowInHelpText = false;
             helpOption = commandLineApplication.HelpOption("-? | -h | --help");
         }
@@ -71,7 +77,7 @@ namespace Starcounter.ErrorCodes.Generator {
                 throw new ArgumentException("Sourcefile argument is mandatory and must be specified.");
             }
 
-            if (!csharpOption.HasValue() && !cOption.HasValue() && !headerOption.HasValue()) {
+            if (!csharpOption.HasValue() && !cOption.HasValue() && !headerOption.HasValue() && !countOption.HasValue()) {
                 Verbose("No output specified.");
                 return -1;
             }
@@ -97,6 +103,11 @@ namespace Starcounter.ErrorCodes.Generator {
                 Verbose("Generating c header to {0}", headerOption.Value());
                 generator = new CHeaderGenerator();
                 generator.Generate(errorFile, headerOption.Value());
+            }
+
+            if (countOption.HasValue()) {
+                Verbose("Writing errorcode count to {0]", headerOption.Value());
+                File.WriteAllText(countOption.Value(), errorFile.Count.ToString());
             }
 
             Verbose("All codefiles generated succesfully.");

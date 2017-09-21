@@ -2,45 +2,87 @@
 
 Shared project for all Starcounter versions (including BlueStar and unmanaged projects). Contains a set of errorcodes and utilites for creating adorned exceptions, as well as some other helpers around errorcodes.
 
-Includes assemblies for C#, header files for c/c++, and native dlls for formatting messages.
+Includes assemblies for C# and header and source files for c/c++.
 
 Starcounter.ErrorCodes contains of 3 parts:
 - The source, `errorcodes.xml`. All codes are defined in this file.
 - The generator, `Starcounter.ErrorCodes.Generator`. Generates sourcefiles based on the xml-file.
-- The managed project, `Starcounter.ErrorCodes`. Invokes the generator and compiles assemblies for multiple platforms for .net (currenty 4.5, 4.6 and netstandard1.6). 
+- The managed project, `Starcounter.ErrorCodes`. Invokes the generator and compiles assemblies for multiple platforms for .net (currently 4.5, 4.6 and netstandard1.0).
 
-# Adding new errorcodes
+## Add new errorcodes
 
 - Clone the repo.
 - Add new codes in `src/errorcodes.xml`
 - Push/merge to `master` branch.
 - A build should be automatically triggered on the buildserver (`StarcounterGeneric/StarcounterShared/Starcounter.Errorcodes`), and if succesful, push a new version.
-- Version of the package is automatically calculated using commit count to get minor version.
-- Updatolder 
-:```
-cd package for errorcodes in the wanted places.
 
-# Build and pack (manually)
+## Bugfix (or other change)
+- Clone the repo.
+- Do the change
+- Bump version in `Starcounter.ErrorCodes.csproj` 
+- Push/merge to `master` branch.
+- A build should be automatically triggered on the buildserver (`StarcounterGeneric/StarcounterShared/Starcounter.Errorcodes`), and if succesful, push a new version.
 
-To get the calculated version of package and assemblies, use the script in the `build` folder:
-
-```
-cd build
-build_and_pack.bat
-```
-
-Created packages will end up in `artifacts` folder.
+## Versioning
+- Major and minor version are bumped manually by editing the `<VersionPrefix>` tag in `Starcounter.ErrorCodes.csproj` file. This needs to be done for all changes **except** adding new errorcodes. See point below for that.
+- Patch version is the number of existing errorcodes in `errorcodes.xml`. This means that the versionnumber will automatically increase when new errorcodes are added.
+- The built assemblies and the nuget package will have the same version.
 
 
-To build and pack manually:
+
+## The projects
+
+### Starcounter.ErrorCodes
+
+The main library for errorcodes. Will, as part of building, call the generator to generate sourcecode files for both .Net (C#) and native parts. Also as part of versioning, the number of errorcodes is outputted to be used as patchnumber.
+
+The generated code with c# will be included as a part of the compilation of this project, while the other files are only needed when a nuget package is created.
+
+#### Build
+To build locally call `dotnet build` from the same folder as where the project file is (`Starcounter.ErrorCodes.csproj`)
 
 ```
 cd src\Starcounter.ErrorCodes
 dotnet restore
 dotnet build
-dotnet pack --no-build
 ```
 
-# Push (manually)
+The generated files can be found under the `obj\Generated` folder.
 
-TODO
+#### Pack
+The builtin functionality in `dotnet` is used to create nuget package. 
+
+```
+cd src\Starcounter.ErrorCodes
+dotnet restore
+dotnet pack
+```
+
+The created package will end up in `\artifacts` in the root.
+
+### Starcounter.ErrorCodes.Generator
+
+A runnable program used to generate sourcecode based on the entries in `errorcodes.xml`.
+
+To see a list of available options simply execute `dotnet run` in the same folder as the project (`src\Starcounter.ErrorCodes.Generator`)
+
+```
+cd src\Starcounter.ErrorCodes.Generator
+dotnet run
+```
+
+```
+Usage:  [arguments] [options]
+
+Arguments:
+  sourcefile  Path to the xml-sourcefile to read errorcodes from.
+
+Options:
+  -cs | --csharp <csharpfile>      Path to write generated C# code to.
+  -c | --c <cfile>                 Path to write generated C code to.
+  -header | --header <headerfile>  Path to write generated header to.
+  -v | --verbose                   Verbose mode.
+  -cnt | --count <file>            Path to write the number of errorcodes to.
+  -? | -h | --help                 Show help information
+```
+

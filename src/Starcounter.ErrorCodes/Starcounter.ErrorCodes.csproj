@@ -7,6 +7,9 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+
+    <!-- NOTE: VersionPrefix here should only contain Major.Minor version since the patchnúmber is calculated. -->
+    <VersionPrefix>0.12</VersionPrefix>
   </PropertyGroup>
 
   <Import Project="..\..\build\generate.props" />

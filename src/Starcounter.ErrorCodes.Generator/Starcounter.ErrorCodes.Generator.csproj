@@ -4,8 +4,6 @@
     <Description>Generate sourcefiles for errorcodes.</Description>
 	  <TargetFramework>netcoreapp1.1</TargetFramework>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
-    <!--<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>-->
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   

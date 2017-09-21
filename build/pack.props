@@ -1,6 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--<Import Project="$(MsBuildThisFileDirectory)generate.props" />-->
-  
+
 	<!-- Properties we respect being customized -->
   <PropertyGroup>
     <PackageOutputPath Condition="'$(PackageOutputPath)' == ''">$(MsBuildThisFileDirectory)..\artifacts</PackageOutputPath>

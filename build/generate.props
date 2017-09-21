@@ -4,8 +4,9 @@
     <XmlSourceFile>..\errorcodes.xml</XmlSourceFile>
     <GeneratedOutputFolder>obj\Generated\</GeneratedOutputFolder>
     <GeneratedFilename>errorcodes</GeneratedFilename>
-    <CsFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.cs</CsFilePath>
-    <CFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.c</CFilePath>
-    <HFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.h</HFilePath>
+    <CsFilePath>$(GeneratedOutputFolder)$(TargetFramework)\$(GeneratedFilename).g.cs</CsFilePath>
+    <CFilePath>$(GeneratedOutputFolder)$(TargetFramework)\$(GeneratedFilename).g.c</CFilePath>
+    <HFilePath>$(GeneratedOutputFolder)$(TargetFramework)\$(GeneratedFilename).g.h</HFilePath>
+    <CountFilePath>$(GeneratedOutputFolder)$(TargetFramework)\$(GeneratedFilename).count</CountFilePath>
   </PropertyGroup>
 </Project>

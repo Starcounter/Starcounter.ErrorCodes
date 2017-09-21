@@ -1,30 +1,48 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="RestoreGenerator" BeforeTargets="Restore">
+  <Target Name="RestoreAndBuildGenerator" BeforeTargets="Restore">
     <Exec
       Command="dotnet restore $(GeneratorProj)"
+      ContinueOnError="False"
+    />
+    <Exec
+      Command="dotnet build $(GeneratorProj)"
       ContinueOnError="False"
     />
   </Target>
 
   <Target Name="CreateContentOutputFolder" BeforeTargets="GenerateCode">
-    <MakeDir Directories="$(GeneratedOutputFolder)" />
+    <MakeDir Directories="$(GeneratedOutputFolder)\$(TargetFramework)" />
   </Target>
 
   <Target Name="GenerateCode" BeforeTargets="BeforeBuild">
 	  <Exec
-      Command="dotnet run --project $(GeneratorProj) $(XmlSourceFile) --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath)"
+      Command="dotnet run --no-build --project $(GeneratorProj) $(XmlSourceFile) --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath) --count $(CountFilePath)"
       Outputs="$(CsFilePath);$(CFilePath);$(HFilePath)"
       ContinueOnError="False"
     />
+
     <ItemGroup>
       <Compile Include="$(CsFilePath)" />
     </ItemGroup>
+
+    <PropertyGroup>
+      <PatchNumber>$([System.IO.File]::ReadAllText('$(CountFilePath)'))</PatchNumber>
+      <Version>$(VersionPrefix).$(PatchNumber)</Version>
+    </PropertyGroup>
   </Target>
 
-  <Target Name="CleanGeneratedCode" AfterTargets="Clean">
+  <Target Name="CopyGeneratedFiles" AfterTargets="GenerateCode">
+     <ItemGroup>  
+        <FilesToCopy Include="$(CsFilePath);$(CFilePath);$(HFilePath);$(CountFilePath)" />  
+    </ItemGroup>  
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(GeneratedOutputFolder)" /> 
+  </Target>
+
+  <Target Name="CleanGeneratedCode" AfterTargets="Clean" BeforeTargets="GenerateCode">
     <ItemGroup>
-      <FilesToDelete Include="$(GeneratedOutputFolder)**/*.g.*" />
+      <FilesToDelete Include="$(GeneratedOutputFolder)$(TargetFramework)\**/*.g.*;$(GeneratedOutputFolder)**/*.count" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
   </Target>
+
 </Project>
