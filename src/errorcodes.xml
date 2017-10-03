@@ -4935,6 +4935,11 @@
     <code hex="000C" severity="Error" name="ScErrDataBindingForJsonException">
       <message>An exception occurred when a databinding for a property in json was used.</message>
     </code>
+    <code hex="000D" severity="Error" name="ScErrInvalidOperationDataOnEmptyJson">
+      <message>
+        A dataobject was set on a TypedJSON object or array that does not define any properties.
+      </message>
+    </code>
   </facility>
   
     <!-- Error codes related to meta-layer and type system -->
