@@ -107,6 +107,16 @@ namespace Starcounter.ErrorCodes {
                 case 0x0003:
                     ex = new IOException(msg, innerException);
                     break;
+                case 0x000E:
+                    switch (errorCode) {
+                        case Error.SCERRINVALIDOPERATIONDATAONEMPTYJSON:
+                            ex = new InvalidOperationException(msg, innerException);
+                            break;
+                        default:
+                            ex = new Exception(msg, innerException);    
+                            break;
+                    }
+                    break;
                 default:
                     ex = new Exception(msg, innerException);
                     break;
