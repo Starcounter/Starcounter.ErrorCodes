@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <Description>Generate sourcefiles for errorcodes.</Description>
-	  <TargetFramework>netcoreapp1.1</TargetFramework>
+	  <TargetFramework>netcoreapp2.0</TargetFramework>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
     <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
