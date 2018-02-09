@@ -1656,7 +1656,7 @@
     </code>
 -->
     <code hex="0013" severity="Error" name="ScErrObjectNotAType">
-      <message>Instantiation of a object failed because the object wasn't a registered type.</message>
+      <message>Instantiation of an object failed because the object wasn't a registered type.</message>
     </code>
     <code hex="0014" severity="Error" name="ScErrReadOnlyDatabase">
       <message>The database is read-only.</message>
