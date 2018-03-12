@@ -5015,6 +5015,51 @@
         There is a mapped property on this column.
       </message>
     </code>
+    <code hex="000F" severity="Error" name="ScErrMapperFormatNotSupported">
+      <message>
+        The requested mapper format is not supported.
+      </message>
+    </code>
+    <code hex="0010" severity="Error" name="ScErrRecordHasNoIdentity">
+      <message>
+        There is no identity associated with this record.
+      </message>
+    </code>
+    <code hex="0011" severity="Error" name="ScErrIdentityHasNoRecord">
+      <message>
+        There is no record associated with this identity and type.
+      </message>
+    </code>
+    <code hex="0012" severity="Error" name="ScErrMapperScLLVMError">
+      <message>
+        An ScLLVM error occurred while compiling or linking the mapper.
+      </message>
+    </code>
+    <code hex="0013" severity="Error" name="ScErrMapperIoError">
+      <message>
+        An I/O error occurred while accessing the mapper's source code.
+      </message>
+    </code>
+    <code hex="0014" severity="Error" name="ScErrMappingInconsistent">
+      <message>
+        The operation cannot be executed because at least one mapping is in an inconsistent state.
+      </message>
+    </code>
+    <code hex="0015" severity="Error" name="ScErrVdbNotFound">
+      <message>
+        The virtual database does not exist.
+      </message>
+    </code>
+    <code hex="0016" severity="Error" name="ScErrIllegalMapping">
+      <message>
+        An illegal mapping configuration was requested.
+      </message>
+    </code>
+    <code hex="0017" severity="Error" name="ScErrMapperAbort">
+      <message>
+        The operation was aborted at the request of a mapper.
+      </message>
+    </code>
   </facility>
 
 <!--
