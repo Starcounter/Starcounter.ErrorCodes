@@ -3375,6 +3375,11 @@
         Only public code properties in database classes are allowed.
       </message>
     </code>
+    <code hex="0133" severity="Error" name="ScErrFieldInDatabaseType">
+      <message>
+        Database types can not declare instance fields.
+      </message>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
