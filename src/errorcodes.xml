@@ -5065,6 +5065,11 @@
         The operation was aborted at the request of a mapper.
       </message>
     </code>
+    <code hex="0018" severity="Error" name="ScErrColumnIsInherited">
+      <message>
+        This column is inherited from a base table.
+      </message>
+    </code>
   </facility>
 
 <!--
