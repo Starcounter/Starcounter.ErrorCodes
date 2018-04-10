@@ -4825,6 +4825,13 @@
         The given assembly is already weaved.
       </message>
     </code>
+    <!-- Error code to use in any scenario when declaring database types is not
+    permitted. -->
+    <code hex="0029" severity="Error" name="ScErrContainDatabaseTypes">
+      <message>
+        Forbidden declaration of database type(s).
+      </message>
+    </code>
   </facility>
     <!-- Error codes related to network gateway -->
     <facility name="NetworkGateway" hex="000D">
