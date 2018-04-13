@@ -3,9 +3,11 @@
   <PropertyGroup>
     <Description>Library containing Starcounter errorcodes and utilities for creating and handling them.</Description>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard1.0;net45;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT'">$(TargetFrameworks);net45;net46</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
 
     <!-- NOTE: VersionPrefix here should only contain Major.Minor version since the patchnúmber is calculated. -->
