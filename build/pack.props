@@ -32,5 +32,7 @@
       <Pack>true</Pack>
       <PackagePath>files\sccoreerr\sccoreerr_gen.h</PackagePath>
     </None>
+    <Content Include="$(CFilePath)" Pack="true" PackagePath="contentFiles\any\any\sccoreerr_gen.c" PackageCopyToOutput="true" />
+    <Content Include="$(HFilePath)" Pack="true" PackagePath="contentFiles\any\any\sccoreerr_gen.h" PackageCopyToOutput="true" />
   </ItemGroup>
 </Project>
