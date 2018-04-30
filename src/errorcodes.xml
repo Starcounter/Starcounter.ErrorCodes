@@ -3828,6 +3828,9 @@
 	<code hex="002B" severity="Error" name="ScErrMetadataHasntBeenCreated">
 	  <message>Meta-data hasn't been created or created incompletely for this database.</message>
 	</code>
+	<code hex="002C" severity="Error" name="ScErrQueryIdNotFoundInCache">
+	  <message>Given Query ID wasn't found in cache.</message>
+	</code>
   </facility>
 
   <facility name="TransactionAbort" hex="0008">
