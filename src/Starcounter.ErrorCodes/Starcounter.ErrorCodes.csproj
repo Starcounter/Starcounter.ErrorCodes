@@ -6,6 +6,7 @@
     <TargetFrameworks>netstandard1.0</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT'">$(TargetFrameworks);net45;net46</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
