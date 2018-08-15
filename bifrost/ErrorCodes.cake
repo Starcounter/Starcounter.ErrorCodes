@@ -1,12 +1,19 @@
 ///
-/// Global configuration
+/// Root path configuration
 ///
-string errorCodesRootPath = Environment.GetEnvironmentVariable("CakeErrorCodesPath");
-if (string.IsNullOrEmpty(errorCodesRootPath))
+string errorCodesRootPath;
+ if (Tasks.Any(t => t.Name.Equals("Bifrost")))
 {
-    errorCodesRootPath = MakeAbsolute(Directory("..")).FullPath;
-    Information("ErrorCodes root full path: {0}", errorCodesRootPath);
+    // Executed from Bifrost
+    errorCodesRootPath = MakeAbsolute(Directory("../Starcounter.ErrorCodes")).FullPath;
 }
+else
+{
+    // Executed as a self-containment script
+    errorCodesRootPath = MakeAbsolute(Directory("..")).FullPath;
+}
+
+ Information("ErrorCodes root full path: {0}", errorCodesRootPath);
 
 ///
 /// Argument parsing 
