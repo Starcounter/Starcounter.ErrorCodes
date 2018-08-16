@@ -2,7 +2,8 @@
 /// Root path configuration
 ///
 string errorCodesRootPath;
- if (Tasks.Any(t => t.Name.Equals("Bifrost")))
+
+if (Tasks.Any(t => t.Name.Equals("Bifrost")))
 {
     // Executed from Bifrost
     errorCodesRootPath = MakeAbsolute(Directory("../Starcounter.ErrorCodes")).FullPath;
@@ -12,8 +13,6 @@ else
     // Executed as a self-containment script
     errorCodesRootPath = MakeAbsolute(Directory("..")).FullPath;
 }
-
- Information("ErrorCodes root full path: {0}", errorCodesRootPath);
 
 ///
 /// Argument parsing 
