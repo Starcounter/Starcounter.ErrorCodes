@@ -24,28 +24,59 @@ if (string.IsNullOrEmpty(errorCodesStarNugetPath))
     errorCodesStarNugetPath = errorCodesRootPath + "/artifacts";
 }
 
+var errorCodesProj = errorCodesRootPath + "/src/Starcounter.ErrorCodes/Starcounter.ErrorCodes.csproj";
+
+///
+/// Dependent targets
+///
+Task("BuildErrorCodes")
+    .IsDependentOn("RestoreErrorCodes")
+    .IsDependentOn("BuildErrorCodesI");
+
+Task("PackErrorCodes")
+    .IsDependentOn("RestoreErrorCodes")
+    .IsDependentOn("BuildErrorCodesI")
+    .IsDependentOn("PackErrorCodesI");
+
 ///
 /// Tasks
 ///
-Task("PackErrorCodes").Does(() =>
+Task("RestoreErrorCodes").Does(() =>
 {   
-    var errorCodesProj = errorCodesRootPath + "/src/Starcounter.ErrorCodes/Starcounter.ErrorCodes.csproj";
-
-    // restore
-    DotNetCoreRestore(errorCodesProj);
-
-    // clean
-    var dotNetCoreCleanSettings = new DotNetCoreCleanSettings 
+    var settings = new DotNetCoreRestoreSettings 
     {
-        Configuration = errorCodesConfiguration
+        NoCache = true
     };
-    DotNetCoreClean(errorCodesProj, dotNetCoreCleanSettings);
 
-    // pack
-    var dotNetCorePackSettings = new DotNetCorePackSettings
+    DotNetCoreRestore(errorCodesProj, settings);
+});
+
+///
+/// Tasks
+///
+Task("BuildErrorCodesI").Does(() =>
+{
+    var settings = new DotNetCoreBuildSettings 
     {
         Configuration = errorCodesConfiguration,
-        OutputDirectory = errorCodesStarNugetPath
+        NoRestore = true
     };
-    DotNetCorePack(errorCodesProj, dotNetCorePackSettings);
+
+    DotNetCoreBuild(errorCodesProj, settings);
+});
+
+///
+/// Tasks
+///
+Task("PackErrorCodesI").Does(() =>
+{
+    var settings = new DotNetCorePackSettings
+    {
+        Configuration = errorCodesConfiguration,
+        OutputDirectory = errorCodesStarNugetPath,
+        NoRestore = true,
+        NoBuild = true
+    };
+
+    DotNetCorePack(errorCodesProj, settings);
 });
