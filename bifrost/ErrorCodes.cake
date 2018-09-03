@@ -59,6 +59,10 @@ Task("BuildErrorCodesI").Does(() =>
     var settings = new DotNetCoreBuildSettings 
     {
         Configuration = errorCodesConfiguration,
+        MSBuildSettings = new DotNetCoreMSBuildSettings
+        {
+            MaxCpuCount = 1
+        },
         NoRestore = true
     };
 
