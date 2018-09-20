@@ -100,7 +100,7 @@
         // Self-containment dependent targets
         Task("Restore").IsDependentOn("RestoreErrorCodes");
         Task("Build").IsDependentOn("BuildErrorCodes");
-        Task("Pack").IsDependentOn("TestErrorCodes");
+        Task("Pack").IsDependentOn("PackErrorCodes");
 
         // Run target
         foreach (string t in targetsArg)
