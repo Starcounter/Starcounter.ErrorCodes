@@ -1,12 +1,15 @@
 using System.IO;
 
-namespace Starcounter.ErrorCodes.Generator {
-    internal class CCodeGenerator : CodeGenerator {
+namespace Starcounter.ErrorCodes.Generator
+{
+    internal class CCodeGenerator : CodeGenerator
+    {
         private const string INDENT = "  ";
         private const string INDENT2 = INDENT + INDENT;
         private const string CASE = "case {0}: return \"{1}\";";
 
-        protected override void WriteHeader(TextWriter writer, ErrorFile errorFile) {
+        protected override void WriteHeader(TextWriter writer, ErrorFile errorFile)
+        {
             base.WriteHeader(writer, errorFile);
 
             string dateStr = errorFile.Processed.ToString("yyyyMMdd");
@@ -34,14 +37,16 @@ namespace Starcounter.ErrorCodes.Generator {
             writer.WriteLine();
         }
 
-        protected override void WriteContent(TextWriter writer, ErrorFile errorFile) {
+        protected override void WriteContent(TextWriter writer, ErrorFile errorFile)
+        {
             base.WriteContent(writer, errorFile);
 
             writer.WriteLine("SCCOREERR_EXPORT const char* sccoreerr_message(long ec) {");
             writer.WriteIndented("static char s_unknown_text[32];", INDENT);
             writer.WriteIndented("switch (ec) {", INDENT);
 
-            foreach (ErrorCode ec in errorFile.ErrorCodes) {
+            foreach (ErrorCode ec in errorFile.ErrorCodes)
+            {
                 writer.WriteIndented(
                     string.Format(CASE, ec.ConstantNameToUpper, ec.FormattedCodeWithDescription),
                     INDENT2
@@ -55,8 +60,9 @@ namespace Starcounter.ErrorCodes.Generator {
             writer.WriteLine("}");
         }
 
-        protected override void WriteFooter(TextWriter writer, ErrorFile errorFile) {
+        protected override void WriteFooter(TextWriter writer, ErrorFile errorFile)
+        {
             base.WriteFooter(writer, errorFile);
         }
-    }    
+    }
 }

@@ -2,12 +2,14 @@
 using System.IO;
 using System.Security;
 
-namespace Starcounter.ErrorCodes {
+namespace Starcounter.ErrorCodes
+{
     /// <summary>
     /// Top-level exception factory class, shared by all tools and components to
     /// create exceptions from error codes.
     /// </summary>
-    public class ExceptionFactory {
+    public class ExceptionFactory
+    {
         /// <summary>
         /// The customizable factory method responsible for creating an
         /// <see cref="Exception"/> from given error parameters.
@@ -52,7 +54,8 @@ namespace Starcounter.ErrorCodes {
             string messagePostfix,
             Func<uint, string, object[], string> messageFactory,
             params object[] messageArguments
-            ) {
+            )
+        {
             string msg;
             uint facilityCode;
             Exception ex;
@@ -69,9 +72,11 @@ namespace Starcounter.ErrorCodes {
             // Create appropriate exception
 
             facilityCode = ErrorCode.ToFacilityCode(errorCode);
-            switch (facilityCode) {
+            switch (facilityCode)
+            {
                 case 0x0001:
-                    switch (errorCode) {
+                    switch (errorCode)
+                    {
                         case Error.SCERRBADARGUMENTS:
                             ex = new ArgumentException(msg, innerException);
                             break;
@@ -108,12 +113,13 @@ namespace Starcounter.ErrorCodes {
                     ex = new IOException(msg, innerException);
                     break;
                 case 0x000E:
-                    switch (errorCode) {
+                    switch (errorCode)
+                    {
                         case Error.SCERRINVALIDOPERATIONDATAONEMPTYJSON:
                             ex = new InvalidOperationException(msg, innerException);
                             break;
                         default:
-                            ex = new Exception(msg, innerException);    
+                            ex = new Exception(msg, innerException);
                             break;
                     }
                     break;
@@ -128,7 +134,8 @@ namespace Starcounter.ErrorCodes {
         /// <summary>
         ///
         /// </summary>
-        public virtual string StarcounterVersion{
+        public virtual string StarcounterVersion
+        {
             get { return "0.0.0"; }
         }
 
@@ -138,7 +145,8 @@ namespace Starcounter.ErrorCodes {
         /// <param name="exception">The exception.</param>
         /// <param name="errorCode">The error code.</param>
         /// <returns>Exception.</returns>
-        protected Exception DecorateException(Exception exception, uint errorCode) {
+        protected Exception DecorateException(Exception exception, uint errorCode)
+        {
             return ErrorCode.DecorateException(exception, errorCode);
         }
     }

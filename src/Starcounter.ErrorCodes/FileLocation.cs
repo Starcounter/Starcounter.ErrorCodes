@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Starcounter.ErrorCodes {
+namespace Starcounter.ErrorCodes
+{
     /// <summary>
     /// Encapsulates the properties of a location in a file.
     /// </summary>
-    public class FileLocation {
+    public class FileLocation
+    {
         /// <summary>
         /// Represents an unknown file location.
         /// </summary>
@@ -44,7 +46,8 @@ namespace Starcounter.ErrorCodes {
         /// default values.
         /// </summary>
         public FileLocation()
-            : this(null, 0, 0) {
+            : this(null, 0, 0)
+        {
         }
 
         /// <summary>
@@ -54,7 +57,8 @@ namespace Starcounter.ErrorCodes {
         /// <param name="line">The line in the file.</param>
         /// <param name="column">The column of the specified line in the file.</param>
         public FileLocation(string file, int line, int column)
-            : base() {
+            : base()
+        {
             this.File = file;
             this.Line = line;
             this.Column = column;
@@ -69,12 +73,14 @@ namespace Starcounter.ErrorCodes {
         /// <returns>
         /// Text representation of the given location.
         /// </returns>
-        public static string ToString(FileLocation location) {
+        public static string ToString(FileLocation location)
+        {
             string file;
             int line;
             int column;
 
-            if (location == null) {
+            if (location == null)
+            {
                 return string.Format("<,,>");
             }
 
@@ -86,7 +92,8 @@ namespace Starcounter.ErrorCodes {
         }
 
         /// <inheritdoc/>
-        public override string ToString() {
+        public override string ToString()
+        {
             return FileLocation.ToString(this);
         }
 
@@ -102,7 +109,8 @@ namespace Starcounter.ErrorCodes {
         /// A <see cref="FileLocation"/> representing the location
         /// described by <paramref name="locationString"/>.
         /// </returns>
-        public static FileLocation Parse(string locationString) {
+        public static FileLocation Parse(string locationString)
+        {
             Match match;
 
             if (string.IsNullOrEmpty(locationString))
@@ -123,7 +131,8 @@ namespace Starcounter.ErrorCodes {
         /// <param name="match">The match to use.</param>
         /// <returns>A <see cref="FileLocation"/> initialized with the
         /// values in the given match.</returns>
-        internal static FileLocation FromMatch(Match match) {
+        internal static FileLocation FromMatch(Match match)
+        {
             string file;
             int line;
             int column;

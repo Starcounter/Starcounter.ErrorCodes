@@ -1,5 +1,7 @@
-﻿namespace Starcounter.ErrorCodes.Generator {
-    public enum Severity : uint {
+﻿namespace Starcounter.ErrorCodes.Generator
+{
+    public enum Severity : uint
+    {
         Success = 0x0,
         Informational = 0x1,
         Warning = 0x2,
