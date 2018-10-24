@@ -65,7 +65,7 @@ namespace Starcounter.ErrorCodes
                 throw new ArgumentNullException(nameof(messageFactory));
             }
 
-            // Not to be used when tranlating errors originating from the
+            // Not to be used when translating errors originating from the
             // database kernel since the exceptions set up to handle database
             // errors doesn't exist in this assembly.
 
