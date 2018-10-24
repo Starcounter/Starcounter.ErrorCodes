@@ -15,7 +15,11 @@ namespace Starcounter.ErrorCodes.Tests
                 var factory = new ExceptionFactory();
 
                 //When
-                Action createException = () => factory.CreateException(0, null, null, null, null);
+                Action createException = () => factory.CreateException(
+                    0,
+                    new Exception(),
+                    "some string",
+                    null);
 
                 //Then
                 var e = Assert.Throws<ArgumentNullException>(createException);
