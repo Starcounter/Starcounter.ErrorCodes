@@ -60,7 +60,12 @@ namespace Starcounter.ErrorCodes
             uint facilityCode;
             Exception ex;
 
-            // Not to be used when tranlating errors originating from the
+            if (messageFactory == null)
+            {
+                throw new ArgumentNullException(nameof(messageFactory));
+            }
+
+            // Not to be used when translating errors originating from the
             // database kernel since the exceptions set up to handle database
             // errors doesn't exist in this assembly.
 
