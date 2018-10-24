@@ -3,21 +3,29 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-namespace Starcounter.ErrorCodes.Generator {
-    internal class Program {
-        internal static void WaitForDebugger(){
+namespace Starcounter.ErrorCodes.Generator
+{
+    internal class Program
+    {
+        internal static void WaitForDebugger()
+        {
             Console.Write("Waiting for debugger");
-            while (!Debugger.IsAttached) {
+            while (!Debugger.IsAttached)
+            {
                 Console.Write(".");
                 Thread.Sleep(200);
             }
         }
 
-        static int Main(string[] args) {
-            try {
+        static int Main(string[] args)
+        {
+            try
+            {
                 var cli = new CommandLineInterface();
                 cli.Execute(args);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.Error.WriteLine(e.Message);
                 Console.Error.WriteLine();
                 return 1;

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
 
-namespace Starcounter.ErrorCodes {
+namespace Starcounter.ErrorCodes
+{
     /// <summary>
     /// Represents a error message describing a certain Starcounter
     /// error. Instances of this class is materialized by the exception
@@ -14,7 +15,8 @@ namespace Starcounter.ErrorCodes {
     /// behaviour. But it also supports different kind of formatting of
     /// the message, such as shorter summary strings.
     /// </remarks>
-    public sealed class FactoryErrorMessage : ErrorMessage {
+    public sealed class FactoryErrorMessage : ErrorMessage
+    {
         private readonly string messageFromResource;
         private readonly uint code;
 
@@ -32,15 +34,19 @@ namespace Starcounter.ErrorCodes {
         public readonly object[] Arguments;
 
         /// <inheritdoc />
-        public override string Helplink {
-            get {
+        public override string Helplink
+        {
+            get
+            {
                 return ErrorCode.ToHelpLink(this.Code);
             }
         }
 
         /// <inheritdoc />
-        public override string ShortMessage {
-            get {
+        public override string ShortMessage
+        {
+            get
+            {
                 return this.Arguments == null || this.Arguments.Length == 0
                     ? this.messageFromResource
                     : string.Format(this.messageFromResource, this.Arguments);
@@ -48,15 +54,19 @@ namespace Starcounter.ErrorCodes {
         }
 
         /// <inheritdoc />
-        public override string Message {
-            get {
+        public override string Message
+        {
+            get
+            {
                 return InternalToString(false);
             }
         }
 
         /// <inheritdoc />
-        public override string Body {
-            get {
+        public override string Body
+        {
+            get
+            {
                 // To support retreival of the body, we must parse the
                 // underlying message, removing the header (the decoration
                 // part is not part of the message).
@@ -72,14 +82,17 @@ namespace Starcounter.ErrorCodes {
         }
 
         /// <inheritdoc />
-        public override string Header {
-            get {
+        public override string Header
+        {
+            get
+            {
                 return messageFromResource.Substring(0, ErrorMessage.IndexOfHeaderBodyDelimiter(this.messageFromResource));
             }
         }
 
         /// <inheritdoc />
-        public override string Version {
+        public override string Version
+        {
             get { return ErrorCode.ExceptionFactory.StarcounterVersion; }
         }
 
@@ -96,7 +109,8 @@ namespace Starcounter.ErrorCodes {
             string formattedShortMessage,
             string messagePostfix,
             params object[] messageArguments
-            ) {
+            )
+        {
             this.code = errorCode;
             this.messageFromResource = formattedShortMessage;
             this.Postfix = messagePostfix;
@@ -110,16 +124,19 @@ namespace Starcounter.ErrorCodes {
         /// to a string.</param>
         /// <returns>A string representing the error message.</returns>
         /// <see cref="FactoryErrorMessage.ToString()"/>
-        public static implicit operator string(FactoryErrorMessage message) {
+        public static implicit operator string(FactoryErrorMessage message)
+        {
             return message.ToString();
         }
 
         /// <inheritdoc />
-        public override string ToString() {
+        public override string ToString()
+        {
             return InternalToString(true);
         }
 
-        private string InternalToString(bool includeDecoration) {
+        private string InternalToString(bool includeDecoration)
+        {
             StringBuilder buffer;
             string message;
 
@@ -127,7 +144,8 @@ namespace Starcounter.ErrorCodes {
 
             // Apply postfix if given
 
-            if (!string.IsNullOrEmpty(this.Postfix)) {
+            if (!string.IsNullOrEmpty(this.Postfix))
+            {
                 buffer.Append(" ");
                 buffer.Append(this.Postfix);
             }
@@ -135,7 +153,8 @@ namespace Starcounter.ErrorCodes {
             // Append the help link to the end of the message, if told
             // to do so.
 
-            if (includeDecoration) {
+            if (includeDecoration)
+            {
                 buffer.Append(Environment.NewLine);
                 buffer.Append(ErrorCode.ToVersionMessage());
 
@@ -149,7 +168,8 @@ namespace Starcounter.ErrorCodes {
 
             // Apply arguments if available and return the result
 
-            if (this.Arguments != null && this.Arguments.Length > 0) {
+            if (this.Arguments != null && this.Arguments.Length > 0)
+            {
                 message = string.Format(message, this.Arguments);
             }
 

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Starcounter.ErrorCodes {
+namespace Starcounter.ErrorCodes
+{
     /// <summary>
     /// Represents an error message, with properties for different parts
     /// of the encapsulated message. Derived classes are expected to implement
@@ -37,7 +38,8 @@ namespace Starcounter.ErrorCodes {
     /// Version:        2.0.123.3456.
     /// ToString():     The full error message, as seen above.
     /// </example>
-    public abstract class ErrorMessage {
+    public abstract class ErrorMessage
+    {
         /// <summary>
         /// Delimiter used to end the header (marking the beginning of
         /// the body>.
@@ -85,8 +87,10 @@ namespace Starcounter.ErrorCodes {
         /// <summary>
         /// Gets the decorated form of the error code.
         /// </summary>
-        public string DecoratedCode {
-            get {
+        public string DecoratedCode
+        {
+            get
+            {
                 return ErrorCode.ToDecoratedCode(this.Code);
             }
         }
@@ -94,8 +98,10 @@ namespace Starcounter.ErrorCodes {
         /// <summary>
         /// Gets the brief of the error message.
         /// </summary>
-        public virtual string Brief {
-            get {
+        public virtual string Brief
+        {
+            get
+            {
                 int index;
                 string brief;
 
@@ -111,7 +117,8 @@ namespace Starcounter.ErrorCodes {
         /// <param name="errorMessage">The message string to parse.</param>
         /// <returns>An error message exposing the properties of the parsed
         /// error message string.</returns>
-        public static ErrorMessage Parse(string errorMessage) {
+        public static ErrorMessage Parse(string errorMessage)
+        {
             return ParsedErrorMessage.Parse(errorMessage);
         }
 
@@ -125,7 +132,8 @@ namespace Starcounter.ErrorCodes {
         /// <see cref="FileLocation.Unknown"/> is returned.</param>
         /// <returns>An error message exposing the properties of the parsed
         /// error message string.</returns>
-        public static ErrorMessage Parse(string errorMessage, out FileLocation location) {
+        public static ErrorMessage Parse(string errorMessage, out FileLocation location)
+        {
             Match match;
 
             location = FileLocation.Unknown;
@@ -135,7 +143,8 @@ namespace Starcounter.ErrorCodes {
             // Check for the presence of location information
 
             match = FileLocation.RegexPattern.Match(errorMessage);
-            if (match.Success) {
+            if (match.Success)
+            {
                 // We should strip the location information from the string
                 // and just pass the real one on.
 
@@ -156,7 +165,8 @@ namespace Starcounter.ErrorCodes {
         /// factory.
         /// </remarks>
         /// <returns></returns>
-        public Exception ToException() {
+        public Exception ToException()
+        {
             return ToException(null);
         }
 
@@ -170,7 +180,8 @@ namespace Starcounter.ErrorCodes {
         /// </remarks>
         /// <param name="inner"></param>
         /// <returns></returns>
-        public Exception ToException(Exception inner) {
+        public Exception ToException(Exception inner)
+        {
             return ErrorCode.RecreateException(this.Code, ToString(), inner);
         }
 
@@ -196,7 +207,8 @@ namespace Starcounter.ErrorCodes {
         /// </remarks>
         /// <param name="message">The message to parse.</param>
         /// <returns>Index of the header-body delimiter.</returns>
-        internal static int IndexOfHeaderBodyDelimiter(string message) {
+        internal static int IndexOfHeaderBodyDelimiter(string message)
+        {
             int delimiterIndex;
 
             delimiterIndex = message.IndexOf(ErrorMessage.HeaderBodyDelimiter);

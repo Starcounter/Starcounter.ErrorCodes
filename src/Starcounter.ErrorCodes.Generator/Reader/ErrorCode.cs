@@ -1,31 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Starcounter.ErrorCodes.Generator {
-    public sealed class ErrorCode {
-        public Facility Facility { get; private set;}
+namespace Starcounter.ErrorCodes.Generator
+{
+    public sealed class ErrorCode
+    {
+        public Facility Facility { get; private set; }
         public string Name { get; private set; }
         public ushort Code { get; private set; }
         public Severity Severity { get; private set; }
         public string Description { get; private set; }
         public IList<string> RemarkParagraphs { get; private set; }
 
-        public string ConstantName {
+        public string ConstantName
+        {
             get { return Name; }
         }
 
-        public string ConstantNameToUpper {
+        public string ConstantNameToUpper
+        {
             get { return Name.ToUpper(); }
         }
 
-        public uint CodeWithFacility {
-            get {
+        public uint CodeWithFacility
+        {
+            get
+            {
                 return (Facility.Code * 1000) + Code;
             }
         }
 
-        public string FormattedCodeWithDescription {
-            get {
+        public string FormattedCodeWithDescription
+        {
+            get
+            {
                 string formattedDesc = Description;
                 formattedDesc = formattedDesc.Replace("\"", "\\\"");
                 return string.Format("{0} (SCERR{1}): {2}", Name, CodeWithFacility, formattedDesc);
@@ -38,7 +46,8 @@ namespace Starcounter.ErrorCodes.Generator {
                 ushort code,
                 Severity severity,
                 string description,
-                IEnumerable<string> remarkParagraphs) {
+                IEnumerable<string> remarkParagraphs)
+        {
             if (code > 999)
                 throw new ArgumentOutOfRangeException("code", code, "Not a valid value (allowed range is 0-999): 0x" + code.ToString("X"));
 

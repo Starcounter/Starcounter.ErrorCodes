@@ -1,13 +1,16 @@
 using System;
 using System.IO;
 
-namespace Starcounter.ErrorCodes.Generator {
-    internal class CHeaderGenerator : CodeGenerator {
-        protected override void WriteHeader(TextWriter writer, ErrorFile errorFile) {
+namespace Starcounter.ErrorCodes.Generator
+{
+    internal class CHeaderGenerator : CodeGenerator
+    {
+        protected override void WriteHeader(TextWriter writer, ErrorFile errorFile)
+        {
             base.WriteHeader(writer, errorFile);
 
             writer.WriteLine("#ifndef __SCCOREERR_INTERNAL_H");
-            writer.Write("#define __SCCOREERR_INTERNAL_H "); 
+            writer.Write("#define __SCCOREERR_INTERNAL_H ");
             writer.WriteLine(errorFile.Processed.ToString("yyyyMMdd"));
             writer.WriteLine();
             writer.WriteLine("#ifndef DLL_EXPORT");
@@ -40,13 +43,16 @@ namespace Starcounter.ErrorCodes.Generator {
             writer.WriteLine("SCCOREERR_EXPORT const char* sccoreerr_message(long ec);");
         }
 
-        protected override void WriteContent(TextWriter writer, ErrorFile errorFile) {
+        protected override void WriteContent(TextWriter writer, ErrorFile errorFile)
+        {
             uint currentFacility = uint.MaxValue;
 
             base.WriteContent(writer, errorFile);
 
-            foreach(ErrorCode ec in errorFile.ErrorCodes) {
-                if (currentFacility != ec.Facility.Code) {
+            foreach (ErrorCode ec in errorFile.ErrorCodes)
+            {
+                if (currentFacility != ec.Facility.Code)
+                {
                     writer.WriteLine();
                     writer.WriteLine("/* Facility \"" + ec.Facility.Name + "\" */");
                     currentFacility = ec.Facility.Code;
@@ -56,10 +62,11 @@ namespace Starcounter.ErrorCodes.Generator {
             }
         }
 
-        protected override void WriteFooter(TextWriter writer, ErrorFile errorFile) {
+        protected override void WriteFooter(TextWriter writer, ErrorFile errorFile)
+        {
             base.WriteFooter(writer, errorFile);
             writer.WriteLine();
             writer.WriteLine("#endif /* __SCCOREERR_INTERNAL_H */");
         }
-    }    
+    }
 }

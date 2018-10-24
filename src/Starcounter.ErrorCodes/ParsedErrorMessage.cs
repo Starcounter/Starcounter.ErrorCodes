@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Starcounter.ErrorCodes {
+namespace Starcounter.ErrorCodes
+{
     /// <summary>
     /// Exposes the properties of a parsed error message string in the
     /// form or a <see cref="ErrorMessage"/>.
     /// </summary>
-    public sealed class ParsedErrorMessage : ErrorMessage {
+    public sealed class ParsedErrorMessage : ErrorMessage
+    {
         private readonly string givenMessage;
         private readonly uint code;
         private readonly string header;
@@ -21,10 +23,14 @@ namespace Starcounter.ErrorCodes {
         /// <param name="errorMessage">The message string to parse.</param>
         /// <returns>An error message exposing the properties of the parsed
         /// error message string.</returns>
-        internal new static ParsedErrorMessage Parse(string errorMessage) {
-            try {
+        internal new static ParsedErrorMessage Parse(string errorMessage)
+        {
+            try
+            {
                 return InternalParseMessage(errorMessage);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 if (ErrorCode.IsFromErrorCode(e))
                     throw;
 
@@ -32,7 +38,8 @@ namespace Starcounter.ErrorCodes {
             }
         }
 
-        private static ParsedErrorMessage InternalParseMessage(string errorMessage) {
+        private static ParsedErrorMessage InternalParseMessage(string errorMessage)
+        {
             int index;
             int indexToDecoration;
             string header;
@@ -52,9 +59,11 @@ namespace Starcounter.ErrorCodes {
             code = 0;
             index = ErrorMessage.IndexOfHeaderBodyDelimiter(errorMessage);
             header = errorMessage.Substring(0, index);
-            if (!header.Contains("(") || !header.Contains(")")) {
+            if (!header.Contains("(") || !header.Contains(")"))
+            {
                 header = header.ToLowerInvariant();
-                if (header.Contains(".") && header.EndsWith("exception")) {
+                if (header.Contains(".") && header.EndsWith("exception"))
+                {
                     errorMessage = errorMessage.Substring(index + 1);
                     return InternalParseMessage(errorMessage);
                 }
@@ -63,12 +72,12 @@ namespace Starcounter.ErrorCodes {
             }
 
             // Get the error code from the header
-            
+
             // We expect 1 match with 3 groups, where the last group will be the digits of the code.
             // If not, we have an invalid message that does not contain a Starcounter specific code.
             MatchCollection matches = Regex.Matches(header, @"(?i)SC(ERR|WARN)(\d+)");
             if (matches.Count != 1 || matches[0].Groups.Count != 3) throw ToParsingException(errorMessage);
-            
+
             string number = matches[0].Groups[2].Value; // Both indexes are verified in the statement above.
             code = uint.Parse(number);
 
@@ -78,7 +87,7 @@ namespace Starcounter.ErrorCodes {
 
             helplink = ErrorCode.ToHelpLink(code);
 
-            version = ErrorCode.ExceptionFactory.StarcounterVersion; 
+            version = ErrorCode.ExceptionFactory.StarcounterVersion;
             versionMessage = ErrorCode.ToVersionMessage();
             indexToDecoration = errorMessage.LastIndexOf(versionMessage);
             if (indexToDecoration == -1) throw ToParsingException(errorMessage);
@@ -95,42 +104,50 @@ namespace Starcounter.ErrorCodes {
         }
 
         /// <inheritdoc />
-        public override uint Code {
+        public override uint Code
+        {
             get { return code; }
         }
 
         /// <inheritdoc />
-        public override string Header {
+        public override string Header
+        {
             get { return header; }
         }
 
         /// <inheritdoc />
-        public override string Body {
+        public override string Body
+        {
             get { return body; }
         }
 
         /// <inheritdoc />
-        public override string ShortMessage {
+        public override string ShortMessage
+        {
             get { throw new NotSupportedException(); }
         }
 
         /// <inheritdoc />
-        public override string Message {
+        public override string Message
+        {
             get { return message; }
         }
 
         /// <inheritdoc />
-        public override string Helplink {
+        public override string Helplink
+        {
             get { return helplink; }
         }
 
         /// <inheritdoc />
-        public override string Version {
+        public override string Version
+        {
             get { return version; }
         }
 
         /// <inheritdoc />
-        public override string ToString() {
+        public override string ToString()
+        {
             return givenMessage;
         }
 
@@ -141,7 +158,8 @@ namespace Starcounter.ErrorCodes {
             string body,
             string message,
             string version,
-            string helplink) {
+            string helplink)
+        {
             this.givenMessage = input;
             this.code = code;
             this.header = header;
@@ -151,11 +169,13 @@ namespace Starcounter.ErrorCodes {
             this.helplink = helplink;
         }
 
-        internal static Exception ToParsingException(string parsedMessage) {
+        internal static Exception ToParsingException(string parsedMessage)
+        {
             return ToParsingException(parsedMessage, null);
         }
 
-        internal static Exception ToParsingException(string parsedMessage, Exception innerException) {
+        internal static Exception ToParsingException(string parsedMessage, Exception innerException)
+        {
             return ErrorCode.ToException(
                 Error.SCERRWRONGERRORMESSAGEFORMAT,
                 innerException,

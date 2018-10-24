@@ -4,12 +4,14 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Starcounter.ErrorCodes {
+namespace Starcounter.ErrorCodes
+{
     /// <summary>
     /// Utility class exposing the API entrypoint methods used to handle errors
     /// and exceptions in Starcounter code, to make it confirm to the standards.
     /// </summary>
-    public static class ErrorCode {
+    public static class ErrorCode
+    {
         public const string EC_TRANSPORT_KEY = "554CD586-C9DB-4d4a-B952-EA9890D1FB96";
         public const string CodeDecorationPrefix = "SCERR";
 
@@ -17,19 +19,23 @@ namespace Starcounter.ErrorCodes {
 
         private static string DecoratedCodePattern = string.Concat("^", CodeDecorationPrefix, @"\d{3,5}$");
 
-        static ErrorCode() {
+        static ErrorCode()
+        {
             ErrorCode.ExceptionFactory = new ExceptionFactory();
         }
 
-        public static FactoryErrorMessage ToMessage(uint errorCode) {
+        public static FactoryErrorMessage ToMessage(uint errorCode)
+        {
             return InternalToMessage(errorCode, string.Empty);
         }
 
-        public static FactoryErrorMessage ToMessage(uint errorCode, string postfix) {
+        public static FactoryErrorMessage ToMessage(uint errorCode, string postfix)
+        {
             return InternalToMessage(errorCode, postfix);
         }
 
-        public static string ToMessage(string prefix, uint errorCode, string postfix) {
+        public static string ToMessage(string prefix, uint errorCode, string postfix)
+        {
             string message = InternalToMessage(errorCode, postfix);
 
             if (!string.IsNullOrEmpty(prefix))
@@ -38,11 +44,13 @@ namespace Starcounter.ErrorCodes {
             return message;
         }
 
-        public static FactoryErrorMessage ToMessageWithArguments(uint errorCode, string messagePostfix, params object[] messageArguments) {
+        public static FactoryErrorMessage ToMessageWithArguments(uint errorCode, string messagePostfix, params object[] messageArguments)
+        {
             return InternalToMessage(errorCode, messagePostfix, messageArguments);
         }
 
-        public static string ToHelpLink(uint errorCode) {
+        public static string ToHelpLink(uint errorCode)
+        {
             return string.Format("https://docs.starcounter.io/?q=SCERR{0}", errorCode);
         }
 
@@ -52,7 +60,8 @@ namespace Starcounter.ErrorCodes {
         /// <param name="errorCode">The error code.</param>
         /// <returns>The help link message.</returns>
         /// <seealso cref="ToHelpLinkMessage(string)"/>
-        private static string ToHelpLinkMessage(uint errorCode) {
+        private static string ToHelpLinkMessage(uint errorCode)
+        {
             return ToHelpLinkMessage(ToHelpLink(errorCode));
         }
 
@@ -66,7 +75,8 @@ namespace Starcounter.ErrorCodes {
         /// Console.Write(msg);
         /// /* Output: Help page: http://www.starcounter.com/wiki/SCERR12345. */
         /// </example>
-        public static string ToHelpLinkMessage(string helplink) {
+        public static string ToHelpLinkMessage(string helplink)
+        {
             return string.Concat("Help page: ", helplink, ".");
         }
 
@@ -79,7 +89,8 @@ namespace Starcounter.ErrorCodes {
         /// Console.Write(msg);
         /// /* Output: Version: 2.0.123. */
         /// </example>
-        public static string ToVersionMessage() {
+        public static string ToVersionMessage()
+        {
             return string.Concat("Version: ", ExceptionFactory.StarcounterVersion, ".");
         }
 
@@ -89,15 +100,18 @@ namespace Starcounter.ErrorCodes {
         /// </summary>
         /// <param name="errorCode">The error code to convert.</param>
         /// <returns>The decorated code string.</returns>
-        public static string ToDecoratedCode(uint errorCode) {
+        public static string ToDecoratedCode(uint errorCode)
+        {
             return string.Concat(ErrorCode.CodeDecorationPrefix, errorCode);
         }
 
-        public static bool TryGetOrigMessage(Exception exception, out String origMessage) {
+        public static bool TryGetOrigMessage(Exception exception, out String origMessage)
+        {
             if (exception == null)
                 throw ErrorCode.ToException(Error.SCERRBADARGUMENTS);
 
-            if (!exception.Data.Contains(ErrorCode.EC_TRANSPORT_KEY)) {
+            if (!exception.Data.Contains(ErrorCode.EC_TRANSPORT_KEY))
+            {
                 origMessage = null;
                 return false;
             }
@@ -116,7 +130,8 @@ namespace Starcounter.ErrorCodes {
         /// <returns>
         /// True if the exception stems from a error code, false if not.
         /// </returns>
-        public static bool IsFromErrorCode(Exception exception) {
+        public static bool IsFromErrorCode(Exception exception)
+        {
             uint ignored;
             return TryGetCode(exception, out ignored);
         }
@@ -133,9 +148,11 @@ namespace Starcounter.ErrorCodes {
         /// True if the exception stems from the error code <c>code</c>;
         /// false if not.
         /// </returns>
-        public static bool IsFromErrorCode(Exception exception, uint code) {
+        public static bool IsFromErrorCode(Exception exception, uint code)
+        {
             uint candidate;
-            if (TryGetCode(exception, out candidate)) {
+            if (TryGetCode(exception, out candidate))
+            {
                 return candidate == code;
             }
 
@@ -148,7 +165,8 @@ namespace Starcounter.ErrorCodes {
         /// </summary>
         /// <param name="errorCodeString">The string to validate.</param>
         /// <returns>True if match. False otherwise.</returns>
-        public static bool IsDecoratedErrorCode(string errorCodeString) {
+        public static bool IsDecoratedErrorCode(string errorCodeString)
+        {
             if (string.IsNullOrEmpty(errorCodeString))
                 throw ErrorCode.ToException(Error.SCERRBADARGUMENTS);
 
@@ -169,7 +187,8 @@ namespace Starcounter.ErrorCodes {
         /// in the form "SCERR1234".</param>
         /// <returns>The error code parsed out from the string and converted
         /// to a number.</returns>
-        public static uint ParseDecorated(string errorCodeString) {
+        public static uint ParseDecorated(string errorCodeString)
+        {
             return uint.Parse(errorCodeString.Substring(5));
         }
 
@@ -184,8 +203,10 @@ namespace Starcounter.ErrorCodes {
         /// </param>
         /// <returns>True if the given string confirmed to standard. False if
         /// not.</returns>
-        public static bool TryParseDecorated(string errorCodeString, out uint errorCode) {
-            if (IsDecoratedErrorCode(errorCodeString)) {
+        public static bool TryParseDecorated(string errorCodeString, out uint errorCode)
+        {
+            if (IsDecoratedErrorCode(errorCodeString))
+            {
                 errorCode = ParseDecorated(errorCodeString);
                 return true;
             }
@@ -200,11 +221,13 @@ namespace Starcounter.ErrorCodes {
         /// <param name="exception">The exception.</param>
         /// <param name="errorCode">The error code.</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
-        public static bool TryGetCode(Exception exception, out uint errorCode) {
+        public static bool TryGetCode(Exception exception, out uint errorCode)
+        {
             if (exception == null)
                 throw ErrorCode.ToException(Error.SCERRBADARGUMENTS);
 
-            if (!exception.Data.Contains(ErrorCode.EC_TRANSPORT_KEY)) {
+            if (!exception.Data.Contains(ErrorCode.EC_TRANSPORT_KEY))
+            {
                 errorCode = 0;
                 return false;
             }
@@ -221,7 +244,8 @@ namespace Starcounter.ErrorCodes {
         /// The <see cref="Exception"/> to get the message from.</param>
         /// <param name="message">The <see cref="ErrorMessage"/> retrieved.</param>
         /// <returns>True if a message was retreived; else false.</returns>
-        public static bool TryGetCodedMessage(Exception exception, out ErrorMessage message) {
+        public static bool TryGetCodedMessage(Exception exception, out ErrorMessage message)
+        {
             // Very rudimentary implementation, using the message parser
             // when attempting to fetch a message, and even relying on
             // exception handling in a Try... method pattern.
@@ -234,10 +258,13 @@ namespace Starcounter.ErrorCodes {
                 throw ErrorCode.ToException(Error.SCERRBADARGUMENTS);
 
             uint code;
-            if (TryGetCode(exception, out code)) {
-                try {
+            if (TryGetCode(exception, out code))
+            {
+                try
+                {
                     message = ErrorMessage.Parse(exception.Message);
-                    if (message.Code == code) {
+                    if (message.Code == code)
+                    {
                         // We do this check as an extra safety measure to assure
                         // we detect any future problem parsing a certain message
                         // that might look like an error message but really isnt.
@@ -254,35 +281,43 @@ namespace Starcounter.ErrorCodes {
             return false;
         }
 
-        public static uint ToFacilityCode(uint errorCode) {
+        public static uint ToFacilityCode(uint errorCode)
+        {
             return errorCode / 1000;
         }
 
-        public static Exception ToException(uint errorCode) {
+        public static Exception ToException(uint errorCode)
+        {
             return InternalCreateException(errorCode, null, null, null, null);
         }
 
-        public static Exception ToException(uint errorCode, Func<string, Exception, Exception> customFactory) {
+        public static Exception ToException(uint errorCode, Func<string, Exception, Exception> customFactory)
+        {
             return InternalCreateException(errorCode, null, null, customFactory, null);
         }
 
-        public static Exception ToException(uint errorCode, Exception innerException) {
+        public static Exception ToException(uint errorCode, Exception innerException)
+        {
             return InternalCreateException(errorCode, innerException, null, null, null);
         }
 
-        public static Exception ToException(uint errorCode, Exception innerException, Func<string, Exception, Exception> customFactory) {
+        public static Exception ToException(uint errorCode, Exception innerException, Func<string, Exception, Exception> customFactory)
+        {
             return InternalCreateException(errorCode, innerException, null, customFactory, null);
         }
 
-        public static Exception ToException(uint errorCode, string messagePostfix) {
+        public static Exception ToException(uint errorCode, string messagePostfix)
+        {
             return InternalCreateException(errorCode, null, messagePostfix, null, null);
         }
 
-        public static Exception ToException(uint errorCode, string messagePostfix, Func<string, Exception, Exception> customFactory) {
+        public static Exception ToException(uint errorCode, string messagePostfix, Func<string, Exception, Exception> customFactory)
+        {
             return InternalCreateException(errorCode, null, messagePostfix, customFactory, null);
         }
 
-        public static Exception ToException(uint errorCode, Exception innerException, string messagePostfix) {
+        public static Exception ToException(uint errorCode, Exception innerException, string messagePostfix)
+        {
             return InternalCreateException(errorCode, innerException, messagePostfix, null, null);
         }
 
@@ -290,7 +325,8 @@ namespace Starcounter.ErrorCodes {
             uint errorCode,
             Exception innerException,
             string messagePostfix,
-            Func<string, Exception, Exception> customFactory) {
+            Func<string, Exception, Exception> customFactory)
+        {
             return InternalCreateException(errorCode, innerException, messagePostfix, customFactory, null);
         }
 
@@ -298,7 +334,8 @@ namespace Starcounter.ErrorCodes {
             uint errorCode,
             Func<string, Exception, Exception> customFactory,
             params object[] messageArguments
-            ) {
+            )
+        {
             return InternalCreateException(errorCode, null, null, customFactory, messageArguments);
         }
 
@@ -307,7 +344,8 @@ namespace Starcounter.ErrorCodes {
             Exception innerException,
             Func<string, Exception, Exception> customFactory,
             params object[] messageArguments
-            ) {
+            )
+        {
             return InternalCreateException(errorCode, innerException, null, customFactory, messageArguments);
         }
 
@@ -316,7 +354,8 @@ namespace Starcounter.ErrorCodes {
             Exception innerException,
             string messagePostfix,
             params object[] messageArguments
-            ) {
+            )
+        {
             return InternalCreateException(errorCode, innerException, messagePostfix, null, messageArguments);
         }
 
@@ -326,11 +365,13 @@ namespace Starcounter.ErrorCodes {
             string messagePostfix,
             Func<string, Exception, Exception> customFactory,
             params object[] messageArguments
-            ) {
+            )
+        {
             return InternalCreateException(errorCode, innerException, messagePostfix, customFactory, messageArguments);
         }
 
-        public static void SetExceptionFactory(ExceptionFactory factory) {
+        public static void SetExceptionFactory(ExceptionFactory factory)
+        {
             if (factory == null) throw new ArgumentNullException("factory");
             ErrorCode.ExceptionFactory = factory;
         }
@@ -361,7 +402,7 @@ namespace Starcounter.ErrorCodes {
         {
             Func<uint, string, object[], string> messageFactory;
 
-            messageFactory = delegate(uint code, string postfix, object[] arguments)
+            messageFactory = delegate (uint code, string postfix, object[] arguments)
             {
                 return message;
             };
@@ -378,8 +419,9 @@ namespace Starcounter.ErrorCodes {
             uint errorCode,
             string messagePostfix,
             params object[] messageArguments
-            ) {
-            
+            )
+        {
+
             string msg = Error.ToMessage(errorCode);
             return new FactoryErrorMessage(errorCode, msg, messagePostfix, messageArguments);
         }
@@ -389,10 +431,12 @@ namespace Starcounter.ErrorCodes {
             Exception innerException,
             string messagePostfix,
             Func<string, Exception, Exception> customFactory,
-            params object[] messageArguments) {
+            params object[] messageArguments)
+        {
             Func<uint, string, object[], string> messageFactory;
 
-            if (errorCode == 0) {
+            if (errorCode == 0)
+            {
                 throw ErrorCode.ToException(
                     Error.SCERRBADARGUMENTS,
                     "ErrorCode.ToException(0) is invalid. Code 0 (zero) is reserved for successful results, not errors.");
@@ -400,14 +444,16 @@ namespace Starcounter.ErrorCodes {
 
             // Use default message creation factory
 
-            messageFactory = delegate(uint code, string postfix, object[] arguments) {
+            messageFactory = delegate (uint code, string postfix, object[] arguments)
+            {
                 return ToMessageWithArguments(code, postfix, arguments).ToString();
             };
 
             // Decide if we have a custom exception factory to consider or
             // not, and invoke the proper exception creation routine.
 
-            if (customFactory == null) {
+            if (customFactory == null)
+            {
                 return ErrorCode.ExceptionFactory.CreateException(
                     errorCode,
                     innerException,
@@ -434,7 +480,8 @@ namespace Starcounter.ErrorCodes {
             Func<string, Exception, Exception> customFactory,
             Func<uint, string, object[], string> messageFactory,
             params object[] messageArguments
-            ) {
+            )
+        {
             string msg;
             Exception ex;
 
@@ -468,7 +515,8 @@ namespace Starcounter.ErrorCodes {
             return DecorateException(ex, errorCode);
         }
 
-        internal static Exception DecorateException(Exception exception, uint errorCode) {
+        internal static Exception DecorateException(Exception exception, uint errorCode)
+        {
             exception.Data[ErrorCode.EC_TRANSPORT_KEY] = errorCode;
             exception.HelpLink = ErrorCode.ToHelpLink(errorCode);
             exception.Source = string.Format(

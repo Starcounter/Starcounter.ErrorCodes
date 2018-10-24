@@ -1,8 +1,11 @@
 ﻿using System;
 
-namespace Starcounter.ErrorCodes.Generator {
-    public sealed class Facility {
-        internal Facility(string name, uint code) {
+namespace Starcounter.ErrorCodes.Generator
+{
+    public sealed class Facility
+    {
+        internal Facility(string name, uint code)
+        {
             if (code >> 12 != 0)
                 throw new ArgumentOutOfRangeException("code", code, "Not a valid 12-bit value: 0x" + code.ToString("X"));
 
