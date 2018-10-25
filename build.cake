@@ -29,6 +29,7 @@
     }
 
     var errorCodesProj = rootPath + "/src/Starcounter.ErrorCodes/Starcounter.ErrorCodes.csproj";
+    var errorCodesTestProj = rootPath + "/test/Starcounter.ErrorCodes.Tests/Starcounter.ErrorCodes.Tests.csproj";
 
     ///
     /// Dependent targets
@@ -37,9 +38,15 @@
         .IsDependentOn("RestoreErrorCodes")
         .IsDependentOn("BuildErrorCodesI");
 
+    Task("TestErrorCodes")
+        .IsDependentOn("RestoreErrorCodes")
+        .IsDependentOn("BuildErrorCodesI")
+        .IsDependentOn("TestErrorCodesI");
+
     Task("PackErrorCodes")
         .IsDependentOn("RestoreErrorCodes")
         .IsDependentOn("BuildErrorCodesI")
+        .IsDependentOn("TestErrorCodesI")
         .IsDependentOn("PackErrorCodesI");
 
     ///
@@ -53,6 +60,7 @@
         };
 
         DotNetCoreRestore(errorCodesProj, settings);
+        DotNetCoreRestore(errorCodesTestProj, settings);
     });
 
     ///
@@ -70,7 +78,27 @@
             NoRestore = true
         };
 
-        DotNetCoreBuild(errorCodesProj, settings);
+        DotNetCoreBuild(errorCodesTestProj, settings);
+    });
+
+    ///
+    /// Task for testing ErrorCodes
+    ///
+    Task("TestErrorCodesI").Does(() => 
+    {
+        var file = new FilePath(errorCodesTestProj);
+        var dir = file.GetDirectory();
+        var projNameWithoutExtension = file.GetFilenameWithoutExtension();
+
+        var settings = new DotNetCoreTestSettings
+        {
+            Configuration = configuration,
+            DiagnosticFile = dir + "/" + projNameWithoutExtension + ".log",
+            NoBuild = true,
+            NoRestore = true
+        };
+
+        DotNetCoreTest(file.FullPath, settings);
     });
 
     ///
@@ -100,6 +128,7 @@
         // Self-containment dependent targets
         Task("Restore").IsDependentOn("RestoreErrorCodes");
         Task("Build").IsDependentOn("BuildErrorCodes");
+        Task("Test").IsDependentOn("TestErrorCodes");
         Task("Pack").IsDependentOn("PackErrorCodes");
 
         // Run target
