@@ -78,6 +78,7 @@
             NoRestore = true
         };
 
+        DotNetCoreBuild(errorCodesProj, settings);
         DotNetCoreBuild(errorCodesTestProj, settings);
     });
 
