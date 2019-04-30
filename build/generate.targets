@@ -16,7 +16,7 @@
 
   <Target Name="GenerateCode" BeforeTargets="BeforeBuild">
 	  <Exec
-      Command="dotnet run --no-build --project $(GeneratorProj) $(XmlSourceFile) --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath) --count $(CountFilePath)"
+      Command="dotnet run --no-build --project $(GeneratorProj) $(XmlSourceFile)  --verbose --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath) --count $(CountFilePath)"
       Outputs="$(CsFilePath);$(CFilePath);$(HFilePath)"
       ContinueOnError="False"
     />
