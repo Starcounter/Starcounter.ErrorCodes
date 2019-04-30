@@ -3380,6 +3380,11 @@
         Database types can not declare instance fields.
       </message>
     </code>
+    <code hex="0134" severity="Error" name="ScErrEntityClassNotAbstract">
+      <message>
+        The class is not abstract. Entity classes must be declared abstract.
+      </message>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
