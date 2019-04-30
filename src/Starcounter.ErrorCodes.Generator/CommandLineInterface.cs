@@ -122,7 +122,7 @@ namespace Starcounter.ErrorCodes.Generator
 
             if (countOption.HasValue())
             {
-                Verbose("Writing errorcode count to {0}", headerOption.Value());
+                Verbose("Writing errorcode count to {0}", countOption.Value());
                 File.WriteAllText(countOption.Value(), errorFile.Count.ToString());
             }
 
