@@ -3385,6 +3385,11 @@
         The class is not abstract. Entity classes must be declared abstract.
       </message>
     </code>
+    <code hex="0135" severity="Error" name="ScErrAutoPropNotAbstract">
+      <message>
+        The property is not abstract. Auto-implemented properties in entity classes must be declared abstract.
+      </message>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
