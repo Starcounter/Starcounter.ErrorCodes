@@ -3,8 +3,7 @@
   <PropertyGroup>
     <Description>Library containing Starcounter errorcodes and utilities for creating and handling them.</Description>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard1.0</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT'">$(TargetFrameworks);net45;net46</TargetFrameworks>
+    <TargetFramework>netstandard1.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <SignAssembly>true</SignAssembly>
@@ -12,7 +11,7 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
 
     <!-- NOTE: VersionPrefix here should only contain Major.Minor version since the patchnúmber is calculated. -->
-    <VersionPrefix>0.16</VersionPrefix>
+    <VersionPrefix>0.17</VersionPrefix>
   </PropertyGroup>
 
   <Import Project="..\..\build\generate.props" />
