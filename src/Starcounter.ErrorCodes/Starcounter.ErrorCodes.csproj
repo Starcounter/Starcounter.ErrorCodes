@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Library containing Starcounter errorcodes and utilities for creating and handling them.</Description>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT'">$(TargetFrameworks);net45;net46</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyVersion>1.0.0</AssemblyVersion>
