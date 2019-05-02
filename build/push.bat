@@ -1,19 +1,18 @@
 @ECHO OFF
 
-SET "NUGET_URL=https://www.myget.org/F/starcounter/api/v2/package"
-:: SET "NUGET_SS_URL=https://www.myget.org/F/starcounter/symbols/api/v2/package"
+SET "NUGET_URL=https://api.nuget.org/v3/index.json"
 
 IF "%GIT_ERRORCODES_BRANCH%" NEQ "master" (
     ECHO Not building main branch 'master'. Skipping push.
     EXIT /b 0
 )
 
-IF "%MYGET_API_KEY%"=="" (
-	ECHO Myget API key not set. Skipping push
+IF "%NUGET_API_KEY%"=="" (
+	ECHO NuGet API key not set. Skipping push
 	EXIT /b 0
 )
 
-dotnet nuget push --source %NUGET_URL% --api-key %MYGET_API_KEY%  ..\artifacts\
+dotnet nuget push --source %NUGET_URL% --api-key %NUGET_API_KEY%  ..\artifacts\
 
 IF ERRORLEVEL 1 (
     ECHO Push failed. 
