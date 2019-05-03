@@ -14,9 +14,93 @@
     <!-- NOTE: VersionPrefix here should only contain Major.Minor version since the patchnúmber is calculated. -->
     <VersionPrefix>0.20</VersionPrefix>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Generate\Generate.csproj" PrivateAssets="All" />
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <XmlSourceFile>..\errorcodes.xml</XmlSourceFile>
+    <GeneratedOutputFolder>..\Generate\obj\Generated\</GeneratedOutputFolder>
+    <GeneratedFilename>errorcodes</GeneratedFilename>
+    <CsFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.cs</CsFilePath>
+    <CFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.c</CFilePath>
+    <HFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.h</HFilePath>
+    <CountFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).count</CountFilePath>
+  </PropertyGroup>
+  
+  <!-- 
+    After we have resolved project references, i.e. when referenced projects have 
+    been built, but before we build this project, we derive the version from the generated
+    count. 
+  -->
+  <Target Name="IncludeGeneratedCode" AfterTargets="ResolveProjectReferences">
+    <ItemGroup>
+      <Compile Include="$(CsFilePath)" />
+    </ItemGroup>
+    
+    <PropertyGroup>
+      <PatchNumber>$([System.IO.File]::ReadAllText('$(CountFilePath)'))</PatchNumber>
+      <Version>$(VersionPrefix).$(PatchNumber)</Version>
+    </PropertyGroup>
+    
+    <Message Importance="high" Text="Building $(Version) derived from '$(CountFilePath)')" />
+  </Target>
+  
+  <!-- Properties, items and targets relating to packaging, i.e. when `dotnet pack` is invoked -->
+  
+  <!-- Properties we respect being customized -->
+  <PropertyGroup>
+    <PackageOutputPath Condition="'$(PackageOutputPath)' == ''">$(MsBuildThisFileDirectory)..\..\artifacts</PackageOutputPath>
+  </PropertyGroup>
+  
+  <!-- Static package properties -->
+  <PropertyGroup>
+    <ThisRepoUri>https://github.com/Starcounter/Starcounter.ErrorCodes</ThisRepoUri>
+    <PackageProjectUrl>$(ThisRepoUri)</PackageProjectUrl>
+    <RepositoryUrl>$(ThisRepoUri)</RepositoryUrl>
+    <Authors>Starcounter</Authors>
+    <IncludeSymbols>false</IncludeSymbols> 
+  </PropertyGroup>
 
-  <Import Project="..\..\build\generate.props" />
-  <Import Project="..\..\build\pack.props" />
-  <Import Project="..\..\build\generate.targets" />
-  <Import Project="..\..\build\pack.targets" />
+  <!-- 
+    Source and generated files that should be included in the package. The built
+    library is included implicitly.
+  -->
+  <ItemGroup>
+    <None Include="$(XmlSourceFile)">
+      <Pack>true</Pack>
+      <PackagePath>files\source\</PackagePath>
+    </None>
+    <None Include="staticcontent/*">
+      <Pack>true</Pack>
+      <PackagePath>files\sccoreerr\</PackagePath>
+    </None>
+    <None Include="$(CFilePath)">
+      <Pack>true</Pack>
+      <PackagePath>files\sccoreerr\sccoreerr_gen.c</PackagePath>
+    </None>
+    <None Include="$(HFilePath)">
+      <Pack>true</Pack>
+      <PackagePath>files\sccoreerr\sccoreerr_gen.h</PackagePath>
+    </None>
+    <Content Include="$(CFilePath)" Pack="true" PackagePath="contentFiles\any\any\sccoreerr_gen.c" PackageCopyToOutput="true" />
+    <Content Include="$(HFilePath)" Pack="true" PackagePath="contentFiles\any\any\sccoreerr_gen.h" PackageCopyToOutput="true" />
+  </ItemGroup>
+  
+  <!-- Derived package version from generated count file -->
+  <Target Name="SetNugetVersion" BeforeTargets="GenerateNuspec">
+    <PropertyGroup>
+      <PatchNumber>$([System.IO.File]::ReadAllText('$(CountFilePath)'))</PatchNumber>
+      <PackageVersion>$(VersionPrefix).$(PatchNumber)</PackageVersion>
+    </PropertyGroup>
+  </Target>
+  
+  <Target Name="CleanNuspecs" AfterTargets="Clean">
+    <ItemGroup>
+      <NuspecsToDelete Include="obj\**/*.nuspec" />
+    </ItemGroup>
+    <Delete Files="@(NuspecsToDelete)" />
+  </Target>
+  
 </Project>
