@@ -4,7 +4,7 @@ Shared project for all Starcounter versions (including BlueStar and unmanaged pr
 
 Includes assemblies for C# and header and source files for c/c++.
 
-Starcounter.ErrorCodes contains of 3 parts:
+Starcounter.ErrorCodes contains of 3 primary parts:
 - The source, `errorcodes.xml`. All codes are defined in this file.
 - The generator, `Starcounter.ErrorCodes.Generator`. Generates sourcefiles based on the xml-file.
 - The managed project, `Starcounter.ErrorCodes`. Invokes the generator and compiles assemblies for multiple platforms for .net (currently 4.5, 4.6 and netstandard1.0).
@@ -59,6 +59,12 @@ dotnet pack
 ```
 
 The created package will end up in `\artifacts` in the root.
+
+### Generate
+
+Project that, when built, builds the generator (see below) and produce all files that are in turn consumed by `Starcounter.ErrorCodes` when that project is built.
+
+`Starcounter.ErrorCodes` contains a project reference to this project, so whenever you build the former, generate will run.
 
 ### Starcounter.ErrorCodes.Generator
 
