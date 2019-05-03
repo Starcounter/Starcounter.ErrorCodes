@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>netstandard1.0</TargetFrameworks>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <GeneratorProj>..\Starcounter.ErrorCodes.Generator\Starcounter.ErrorCodes.Generator.csproj</GeneratorProj>
+    <XmlSourceFile>..\errorcodes.xml</XmlSourceFile>
+    <GeneratedOutputFolder>obj\Generated\</GeneratedOutputFolder>
+    <GeneratedFilename>errorcodes</GeneratedFilename>
+    <CsFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.cs</CsFilePath>
+    <CFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.c</CFilePath>
+    <HFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.h</HFilePath>
+    <CountFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).count</CountFilePath>
+  </PropertyGroup>
+  
+  <!-- Before the build, build the generator and generate code to a fixed location -->
+  <Target Name="GenerateCode" BeforeTargets="BeforeBuild">
+	  <Exec
+      Command="dotnet build $(GeneratorProj)"
+      ContinueOnError="False"
+    />
+    <MakeDir Directories="$(GeneratedOutputFolder)" />
+    <Exec
+      Command="dotnet run --no-build --project $(GeneratorProj) $(XmlSourceFile)  --verbose --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath) --count $(CountFilePath)"
+      Outputs="$(CsFilePath);$(CFilePath);$(HFilePath)"
+      ContinueOnError="False"
+    />
+  </Target>
+  
+  <!-- When cleaned, and before we generate code, we drop all generated code -->
+  <Target Name="CleanGeneratedCode" AfterTargets="Clean" BeforeTargets="GenerateCode">
+    <ItemGroup>
+      <FilesToDelete Include="$(GeneratedOutputFolder)\**/*.g.*;$(GeneratedOutputFolder)**/*.count" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+  </Target>
+  
+</Project>
