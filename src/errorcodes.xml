@@ -3390,6 +3390,11 @@
         The property is not abstract. Auto-implemented properties in entity classes must be declared abstract.
       </message>
     </code>
+    <code hex="0136" severity="Error" name="ScErrPropertyNotSupported">
+      <message>
+        The property is not supported. Consult Starcounter documentation on declaring properties in database classes.
+      </message>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
