@@ -1759,7 +1759,7 @@
     </code>
     <code hex="0028" severity="Error" name="ScErrTransactionAlreadyBound">
       <message>The transaction is already attached to another thread.</message>
-      <remarks>Indicates an attempt to attach a transaction to a thread when the already is attached to another thread.</remarks>
+      <remarks>Indicates an attempt to attach a transaction to a thread when the transaction is already attached to another thread.</remarks>
     </code>
     <code hex="0029" severity="Error" name="ScErrWeavingFailed">
       <message>General weaver error.</message>
