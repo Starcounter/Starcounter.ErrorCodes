@@ -3395,6 +3395,13 @@
         The property is not supported. Consult Starcounter documentation on declaring properties in database classes.
       </message>
     </code>
+    <code hex="0137" severity="Error" name="ScErrNestedTransactionNotSupported">
+      <message>
+        An attempt was made to initialize a new transaction within the scope of an active transaction.
+        Creating such nested transactions is not supported.
+        Consider reusing the already active transaction or running the new transaction outside the already active transaction's scope.
+      </message>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
