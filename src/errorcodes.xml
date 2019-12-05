@@ -1759,7 +1759,7 @@
     </code>
     <code hex="0028" severity="Error" name="ScErrTransactionAlreadyBound">
       <message>The transaction is already attached to another thread.</message>
-      <remarks>Indicates an attempt to attach a transaction to a thread when the already is attached to another thread.</remarks>
+      <remarks>Indicates an attempt to attach a transaction to a thread when the transaction is already attached to another thread.</remarks>
     </code>
     <code hex="0029" severity="Error" name="ScErrWeavingFailed">
       <message>General weaver error.</message>
@@ -3393,6 +3393,13 @@
     <code hex="0136" severity="Error" name="ScErrPropertyNotSupported">
       <message>
         The property is not supported. Consult Starcounter documentation on declaring properties in database classes.
+      </message>
+    </code>
+    <code hex="0137" severity="Error" name="ScErrNestedTransactionNotSupported">
+      <message>
+        An attempt was made to initialize a new transaction within the scope of an active transaction.
+        Creating such nested transactions is not supported.
+        Consider reusing the already active transaction or running a new transaction outside the already active transaction's scope.
       </message>
     </code>
   </facility>
