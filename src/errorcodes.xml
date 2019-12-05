@@ -3399,7 +3399,7 @@
       <message>
         An attempt was made to initialize a new transaction within the scope of an active transaction.
         Creating such nested transactions is not supported.
-        Consider reusing the already active transaction or running the new transaction outside the already active transaction's scope.
+        Consider reusing the already active transaction or running a new transaction outside the already active transaction's scope.
       </message>
     </code>
   </facility>
