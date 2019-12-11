@@ -13,18 +13,19 @@
     <CsFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.cs</CsFilePath>
     <CFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.c</CFilePath>
     <HFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.h</HFilePath>
+    <MdFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).g.md</MdFilePath>
     <CountFilePath>$(GeneratedOutputFolder)$(GeneratedFilename).count</CountFilePath>
   </PropertyGroup>
   
   <!-- Before the build, build the generator and generate code to a fixed location -->
   <Target Name="GenerateCode" BeforeTargets="BeforeBuild">
-	  <Exec
+    <Exec
       Command="dotnet build $(GeneratorProj)"
       ContinueOnError="False"
     />
     <MakeDir Directories="$(GeneratedOutputFolder)" />
     <Exec
-      Command="dotnet run --no-build --project $(GeneratorProj) $(XmlSourceFile)  --verbose --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath) --count $(CountFilePath)"
+      Command="dotnet run --no-build --project $(GeneratorProj) $(XmlSourceFile) --verbose --csharp $(CsFilePath) --c $(CFilePath) --header $(HFilePath) -md $(MdFilePath) --count $(CountFilePath)"
       Outputs="$(CsFilePath);$(CFilePath);$(HFilePath)"
       ContinueOnError="False"
     />

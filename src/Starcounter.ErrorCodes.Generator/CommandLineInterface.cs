@@ -16,6 +16,7 @@ namespace Starcounter.ErrorCodes.Generator
         private CommandOption helpOption;
         private CommandOption debugOption;
         private CommandOption countOption;
+        private CommandOption mdOption;
 
         public CommandLineInterface()
         {
@@ -30,6 +31,10 @@ namespace Starcounter.ErrorCodes.Generator
             );
             cOption = commandLineApplication.Option(
                 "-c | --c <cfile>", "Path to write generated C code to.",
+                CommandOptionType.SingleValue
+            );
+            mdOption = commandLineApplication.Option(
+                "-md | --mark-down <mdfile>", "Path to write generated MD file to.",
                 CommandOptionType.SingleValue
             );
             headerOption = commandLineApplication.Option(
@@ -111,6 +116,14 @@ namespace Starcounter.ErrorCodes.Generator
                 Verbose("Generating c code to {0}", cOption.Value());
                 generator = new CCodeGenerator();
                 generator.Generate(errorFile, cOption.Value());
+            }
+
+            if (mdOption.HasValue())
+            {
+                string path = mdOption.Value();
+                Verbose("Generating MD documentation to {0}", path);
+                generator = new MdDocsGenerator();
+                generator.Generate(errorFile, path);
             }
 
             if (headerOption.HasValue())
