@@ -3402,6 +3402,11 @@
         Consider reusing the already active transaction or running a new transaction outside the already active transaction's scope.
       </message>
     </code>
+    <code hex="0138" severity="Error" name="ScErrClassNotSupported">
+      <message>
+        Invalid database class definition. Consult Starcounter documentation on declaring database classes.
+      </message>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
