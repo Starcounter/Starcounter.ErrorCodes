@@ -162,8 +162,7 @@
     <code hex="0002" severity="Error" name="ScErrCodeNotEnhanced">
       <message>Code not enhanced.</message>
       <remarks>
-        Runtime error occuring when accessing code that needs to be enhanced in order to work, but
-        for some reason hasn't,
+        Runtime error occuring when accessing code that needs to be enhanced in order to work, but for some reason hasn't.
       </remarks>
     </code>
     <code hex="0003" severity="Error" name="ScErrOutOfMemory">
