@@ -3406,6 +3406,11 @@
         Invalid database class definition. Consult Starcounter documentation on declaring database classes.
       </message>
     </code>
+    <code hex="0139" severity="Error" name="ScErrMemberNotSupported">
+      <message>
+        The member is not supported. Consult Starcounter documentation on declaring database classes.
+      </message>
+    </code>
   </facility>
   
   <!-- Session error codes. -->
